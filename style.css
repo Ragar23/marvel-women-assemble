@@ -1,0 +1,30 @@
+#start-button {
+  color: #ffffff;
+  font-size: 60px;
+  background: #f60404;
+  padding: 20px 60px 20px 60px;
+  cursor: pointer;
+  font-family: Impact;
+  letter-spacing: 0.6cm;
+  box-shadow: 10px 5px 5px black;
+  transition: transform 0.4s;
+  text-shadow: 10px 2px #000000;
+}
+
+#start-button:hover {
+  transform: scale(1.15);
+}
+
+#ImgPosition {
+}
+#FirsPart {
+  background-image: url("./images/mWmn.png");
+  background-size: 100%;
+  margin-top: 50px;
+  border: 10px 10px;
+  width: 1364px;
+  height: 625px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

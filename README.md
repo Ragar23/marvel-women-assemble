@@ -51,6 +51,8 @@ the screen. The game will end if the Ultrons touch the character.
 
 ## Task
 
+- Build the start screen and the buttons
+
 ## Additional Links
 
 ## Notion
