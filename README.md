@@ -1,6 +1,6 @@
 ## MARVEL. ¡WOMEN, ASSEMBLED!
 
-[Link Deploy](http://github.com)
+[Link Deploy](https://github.com/Ragar23/marvel-women-assemble#readme)
 
 ## Description
 
@@ -10,9 +10,8 @@ It is a game where the player first picks a character to play with. Then the pla
 
 - Multiple Ultrons come at you from the right side of the screen randomly to the left side.
 - It has one Marvel character that moves vertically to avoid the Ultrons.
-  \*If those two work
-- Marvel Characters can shoot.
-- Ultrons touching the character will be Game Over
+- Marvel Characters can shoot. \*If the first two work
+- Ultrons touching the character will be Game Over \*If the first two work
 
 ## Backlog
 
@@ -50,13 +49,6 @@ It is a game where the player first picks a character to play with. Then the pla
 - moveCharI (){}
 
 ## States y States Transitions
-
-Definition of the different states and their transition (transition functions)
-
-splashScreen
-gameScreen
-gameOverScreen
-winScreen
 
 ## Task
 
