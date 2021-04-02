@@ -1,7 +1,5 @@
 ## MARVEL. ¡WOMEN, ASSEMBLED!
 
-[Link Deploy](https://github.com/Ragar23/marvel-women-assemble#readme)
-
 ## Description
 
 It is a game where the player first picks a character to play with. Then the player needs to avoid the
