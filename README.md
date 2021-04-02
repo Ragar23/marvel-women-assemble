@@ -2,7 +2,8 @@
 
 ## Description
 
-It is a game where the player first picks a character to play with. Then the player needs to avoid the
+It is a game where the player first picks a character to play with. Then the player needs to avoid the Ultrons coming from the right side of
+the screen. The game will end if the Ultrons touch the character.
 
 ## MVP
 
