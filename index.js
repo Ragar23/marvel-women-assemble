@@ -15,13 +15,34 @@ let bg = new Image();
 bg.src = "./images/bg.png";
 
 let ultron = new Image();
-ultron.src = "./images/ultron.png";
+ultron.src = "./images/outriders.png";
 
 let wanda = new Image();
 wanda.src = "./images/scarlet-witch.png";
 
 let shootBall = new Image();
 shootBall.src = "./images/energyBall.png";
+
+let proxima = new Image();
+proxima.src = "./images/proxima.png";
+
+let corvus = new Image();
+corvus.src = "./images/corvus.png";
+
+let nebula = new Image();
+nebula.src = "./images/nebula.bad.png";
+
+let thanos = new Image();
+thanos.src = "./images/thanos.png";
+
+let valkiria = new Image();
+valkiria.src = "./images/valkiria.png";
+
+let rescuePotts = new Image();
+rescuePotts.src = "./images/rescuePotts.png";
+
+let marvel = new Image();
+marvel.src = "./images/marvel.png";
 
 //The DOM Elements to Start the Game
 let startBtn = document.querySelector("#start-button");
@@ -47,6 +68,27 @@ let shootBallY = scarletY;
 
 let balls = [];
 let incrBall = 3;
+
+//proxima measures
+let proximaX = 2200;
+
+//coruvs measures
+let corvusX = 1400;
+
+//nebula measures
+let nebulaX = 1800;
+
+//thanos measures
+let thanosX = 1250;
+
+//valkiria measures
+let valkiriaX = -30;
+
+//rescue measures
+let rescueX = -30;
+
+//marvel
+let marvelX = -30;
 
 //setting Wanda's controllers
 document.addEventListener("keydown", (event) => {
@@ -82,22 +124,39 @@ document.addEventListener("keyup", () => {
 //My Ultrons
 let ultrons = [
   { x: 1800, y: 300 },
-  { x: 1300, y: 100 },
-  { x: 2000, y: 100 },
-  { x: 1900, y: 100 },
+  { x: 1700, y: 100 },
+  { x: 2000, y: 150 },
+  { x: 1300, y: 60 },
+  { x: 1200, y: 500 },
+  { x: 1100, y: 400 },
+  { x: 2300, y: 200 },
+  { x: 1900, y: 250 },
   { x: 1600, y: 50 },
-  { x: 1300, y: 700 },
+  { x: 2400, y: 700 },
 ];
 
 //My Functions for the Game
 function draw() {
   ctx.drawImage(bg, 0, 0);
   ctx.drawImage(wanda, scarletX, scarletY);
+  ctx.drawImage(proxima, proximaX, 200);
+  proximaX = proximaX - 2;
+  ctx.drawImage(corvus, corvusX, 350);
+  corvusX = corvusX - 4;
+  ctx.drawImage(nebula, nebulaX, 600);
+  nebulaX = nebulaX - 3;
+  ctx.drawImage(thanos, thanosX, 300);
+  ctx.drawImage(valkiria, valkiriaX, 200);
+  valkiriaX = valkiriaX + 2;
+  ctx.drawImage(rescuePotts, rescueX, 350);
+  rescueX = rescueX + 2;
+  ctx.drawImage(marvel, marvelX, 500);
+  marvelX = marvelX + 2;
 
   //Looping my Ultrons
   for (let i = 0; i < ultrons.length; i++) {
     ctx.drawImage(ultron, ultrons[i].x, ultrons[i].y);
-    ultrons[i].x = ultrons[i].x - 5;
+    ultrons[i].x = ultrons[i].x - 3;
 
     if (ultrons[i].x + ultron.width < 0) {
       ultrons[i] = {
