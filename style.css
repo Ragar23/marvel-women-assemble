@@ -1,30 +1,72 @@
-#start-button {
-  color: #ffffff;
-  font-size: 60px;
-  background: #f60404;
-  padding: 20px 60px 20px 60px;
-  cursor: pointer;
-  font-family: Impact;
-  letter-spacing: 0.6cm;
-  box-shadow: 10px 5px 5px black;
-  transition: transform 0.4s;
-  text-shadow: 10px 2px #000000;
-}
-
-#start-button:hover {
-  transform: scale(1.15);
-}
-
-#ImgPosition {
-}
 #FirsPart {
   background-image: url("./images/mWmn.png");
   background-size: 100%;
   margin-top: 50px;
   border: 10px 10px;
-  width: 1364px;
-  height: 625px;
+  width: 300px;
+  height: 138px;
+}
+
+#myCanvas {
+}
+
+#start-button {
   display: flex;
   justify-content: center;
-  align-items: center;
+  color: #ffffff;
+  font-size: 60px;
+  background: #eb0404;
+  padding: 20px 60px 20px 60px;
+  cursor: pointer;
+  font-family: Impact;
+  box-shadow: 10px 5px 5px black;
+  transition: transform 0.4s;
+  text-shadow: 10px 2px #000000;
+}
+
+#theButtonStart {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background-image: url("./images/AvengersFacilityDestroyed.jpg");
+  background-size: 100%;
+}
+
+#instrucciones {
+  display: flex;
+  justify-content: center;
+  font-size: 60px;
+  font-family: Impact;
+}
+
+#start-button:hover {
+  transform: scale(1.15);
+  letter-spacing: 0.6cm;
+}
+
+#end-button {
+  color: #ffffff;
+  font-size: 60px;
+  background: #eb0404;
+  padding: 20px 60px 20px 60px;
+  margin-right: 300px;
+  cursor: pointer;
+  font-family: Impact;
+  box-shadow: 10px 5px 5px black;
+  transition: transform 0.4s;
+  text-shadow: 10px 2px #000000;
+}
+
+#GameOverScreen {
+  background-image: url("./images/mWmn.png");
+  background-size: 100%;
+  margin-top: 50px;
+  border: 10px 10px;
+  width: 800px;
+  height: 365px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }

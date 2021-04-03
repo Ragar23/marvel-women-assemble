@@ -49,9 +49,12 @@ the screen. The game will end if the Ultrons touch the character.
 
 ## States y States Transitions
 
-## Task
+## Tasks
 
 - Build the start screen and the buttons
+- Basic game functionality: add one player, adding enemies.
+- Build the game over screen and the buttons
+-
 
 ## Additional Links
 
