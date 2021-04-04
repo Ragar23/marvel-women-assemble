@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Marvel";
+  src: url("./assets/Marvel.ttf");
+}
 #FirsPart {
   background-image: url("./images/mWmn.png");
   background-size: 100%;
@@ -7,7 +11,10 @@
   height: 138px;
 }
 
-#myCanvas {
+#centerCanvas {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
 }
 
 #start-button {
@@ -18,7 +25,7 @@
   background: #eb0404;
   padding: 20px 60px 20px 60px;
   cursor: pointer;
-  font-family: Impact;
+  font-family: "Marvel";
   box-shadow: 10px 5px 5px black;
   transition: transform 0.4s;
   text-shadow: 10px 2px #000000;
@@ -29,21 +36,14 @@
   justify-content: center;
 }
 
-body {
-  background-image: url("./images/AvengersFacilityDestroyed.jpg");
-  background-size: 100%;
+#commands {
+  list-style: none;
 }
 
-#instrucciones {
+#end-game-button {
   display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: 60px;
-  font-family: Impact;
-}
-
-#start-button:hover {
-  transform: scale(1.15);
-  letter-spacing: 0.6cm;
 }
 
 #end-button {
@@ -51,22 +51,39 @@ body {
   font-size: 60px;
   background: #eb0404;
   padding: 20px 60px 20px 60px;
-  margin-right: 300px;
   cursor: pointer;
-  font-family: Impact;
-  box-shadow: 10px 5px 5px black;
+  font-family: "Marvel";
+  box-shadow: 20px 5px 5px black;
   transition: transform 0.4s;
-  text-shadow: 10px 2px #000000;
+  text-shadow: 10px 0px 0px #000000;
+}
+
+#howToPlay {
+  display: flex;
+  background-color: whitesmoke;
+  opacity: 0.8;
+  justify-content: center;
+  font-size: 30px;
+  text-align: center;
+  font-family: "Marvel";
+  margin-bottom: 50px;
+}
+
+body {
+  background-image: url("./images/Thanos_resurrects_Vision.png");
+  background-image: url("./images/AvengersFacilityDestroyed.jpg");
+  background-size: 100%;
+  height: 780px;
+}
+
+#start-button:hover {
+  transform: scale(1.15);
+  letter-spacing: 0.6cm;
 }
 
 #GameOverScreen {
-  background-image: url("./images/mWmn.png");
+  background-image: url("./images/Thanos_resurrects_Vision.png");
   background-size: 100%;
   margin-top: 50px;
   border: 10px 10px;
-  width: 800px;
-  height: 365px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }

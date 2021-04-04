@@ -54,7 +54,7 @@ the screen. The game will end if the Ultrons touch the character.
 - Build the start screen and the buttons
 - Basic game functionality: add one player, adding enemies.
 - Build the game over screen and the buttons
--
+- Build the instructions into the start screen
 
 ## Additional Links
 
