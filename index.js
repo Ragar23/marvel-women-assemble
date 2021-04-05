@@ -1,5 +1,6 @@
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
+
 //BETTER WRITING MY CODES
 //- Write more descriptive names.
 let intervalId = 0;
@@ -71,6 +72,7 @@ let gameOvBtn = document.querySelector("#end-button");
 let endGameScreen = document.querySelector("#GameOverScreen");
 let bodyImage = document.querySelector("body");
 let instru = document.querySelector("#howToPlay");
+let marvelStudios = document.querySelector("#studios");
 
 //Scarlet measures
 let scarletX = 0,
@@ -267,7 +269,7 @@ function draw() {
   //Game Over and Start Animation
   if (isGameOver) {
     canvas.style.display = "none";
-    backGround.style.display = "none";
+    backGround.style.display = "block";
     gameOvBtn.style.display = "block";
     endGameScreen.style.display = "block";
     audio.pause();
@@ -286,6 +288,7 @@ function startTheGame() {
   gameOvBtn.style.display = "none";
   endGameScreen.style.display = "none";
   instru.style.display = "none";
+  marvelStudios.style.display = "none";
   draw();
 }
 
