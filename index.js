@@ -9,7 +9,7 @@ let isArrowDown = false;
 let isArrowRight = false;
 let isArrowLeft = false;
 let pressS = false;
-let counterForHitThanos = 0;
+let pointsCounter = 0;
 
 // Loading the Images
 
@@ -65,7 +65,7 @@ let instru = document.querySelector("#howToPlay");
 
 //Scarlet measures
 let scarletX = 0,
-  scarletY = 0,
+  scarletY = 50,
   scarletHeight = 20,
   scarletWidth = 200;
 let incrY = 5;
@@ -89,6 +89,7 @@ let corvusX = 1400;
 let nebulaX = 1800;
 //thanos measures
 let thanosX = 1250;
+let thanosY = 0;
 //valkiria measures
 let valkiriaX = -6200;
 //rescue measures
@@ -101,6 +102,12 @@ let okoyeX = -6200;
 let waspX = -6200;
 //shuri
 let shuriX = -6200;
+
+function drawScore() {
+  ctx.font = "40px Marvel";
+  ctx.fillStyle = "#fd0202";
+  ctx.fillText(`MARVEL POINTS ${pointsCounter}`, 20, 50);
+}
 
 //setting Wanda's controllers
 document.addEventListener("keydown", (event) => {
@@ -171,8 +178,9 @@ function draw() {
   waspX += 2;
   ctx.drawImage(shuriImage, shuriX, 550);
   shuriX += 2;
+  drawScore();
 
-  //Looping my Space Dogs
+  //Looping over the Space Dogs
   for (let i = 0; i < arrayOfSpaceDogs.length; i++) {
     ctx.drawImage(spaceDogsImage, arrayOfSpaceDogs[i].x, arrayOfSpaceDogs[i].y);
     arrayOfSpaceDogs[i].x = arrayOfSpaceDogs[i].x - 3;
@@ -183,16 +191,17 @@ function draw() {
         y: Math.floor(Math.random() * (canvas.height - spaceDogsImage.height)),
       };
     }
-
+    //looping over the balls
     for (let j = 0; j < arrayOfBalls.length; j++) {
-      console.log("reach the loop");
       if (collisionWithBall(arrayOfBalls[j], arrayOfSpaceDogs[i])) {
-        console.log("collision happened");
         arrayOfSpaceDogs.splice(i, 1);
         arrayOfBalls.splice(j, 1);
+        pointsCounter += 10;
+        console.log(pointsCounter);
         //i--;
         //j--;
       }
+      // collisionWithThanos(arrayOfBalls[j]);
     }
 
     //Checking if my current spaceDog collide with Wanda
@@ -206,15 +215,6 @@ function draw() {
     for (let i = 0; i < arrayOfBalls.length; i++) {
       ctx.drawImage(ballImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
       arrayOfBalls[i].x += incrBall;
-
-      /* if (collisionWithBall(arrayOfBalls[i], arrayOfUltrons[i])) {
-        arrayOfUltrons.splice(i, 1);
-        arrayOfBalls.splice(i, 1);
-      }*/ //-->HERE I CANNOT DELETE MORE THAN 13 OR IT CRASHES
-      // if (balls[i].y < 150) {
-      //balls.splice(i, 1);
-      //shoot = true;
-      //}
     }
   }
 
@@ -294,7 +294,7 @@ function collisionWithWanda(spaceDogs) {
 }
 
 function collisionWithBall(currentBall, currentSpaceDog) {
-  console.log(currentBall);
+  //console.log(currentBall);
   //I give two parameters because the space dogs are not defined inside the function
   //Check collision between left side of the current space dogs and right side of the current ball
   //Im writing the same thing twice.
@@ -318,7 +318,31 @@ function collisionWithBall(currentBall, currentSpaceDog) {
     return true;
   }
 }
-let audio = new Audio("avengers_assemble_.mp3");
+
+/*function collisionWithThanos(currentBallToThanos) {
+  console.log(currentBallToThanos);
+  let ballsRight = currentBallToThanos.x + ballImage.width;
+  let ballsLeft = currentBallToThanos.x;
+  let ballsTop = currentBallToThanos.y;
+  let ballsBottom = currentBallToThanos.y + ballImage.width;
+
+  let thanosLeft = thanosX;
+  let thanosRight = thanosX + thanosImage.width;
+  let thanosTop = thanosY;
+  let thanosBottom = thanosX + thanosImage.height;
+
+  let crashRight = thanosLeft <= ballsRight && thanosRight >= ballsLeft;
+  let crashLeft = thanosRight >= ballsLeft && thanosLeft <= ballsRight;
+  let crashTop = thanosBottom >= ballsTop && thanosTop <= ballsBottom;
+  let crashBottom = thanosBottom <= ballsBottom && thanosBottom >= ballsTop;
+
+  if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
+    console.log("collision happening");
+    return true;
+  }
+}*/
+
+//let audio = new Audio("avengers_assemble_.mp3");
 /*let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
