@@ -58,6 +58,12 @@ shuriImage.src = "./images/shuri.png";
 let gamoraImage = new Image();
 gamoraImage.src = "./images/gamora.png";
 
+let grootLeftImage = new Image();
+grootLeftImage.src = "./images/babyGroot.png";
+
+let grootRightImage = new Image();
+grootRightImage.src = "./images/babyGrootLeft.png";
+
 //The DOM Elements to Start the Game
 let startBtn = document.querySelector("#start-button");
 let backGround = document.querySelector("#FirsPart");
@@ -161,6 +167,8 @@ let arrayOfSpaceDogs = [
   { x: 1600, y: 50 },
 ];
 
+let displayGroot = true;
+
 //My Functions for the Game
 function draw() {
   ctx.drawImage(bg, 0, 0);
@@ -188,6 +196,14 @@ function draw() {
   gamoraX += +2;
   drawScore();
 
+  if (displayGroot) {
+    ctx.drawImage(grootLeftImage, 50, 650);
+    displayGroot = false;
+  } else {
+    ctx.drawImage(grootRightImage, 50, 650);
+    displayGroot = true;
+  }
+
   //Looping over the Space Dogs
   for (let i = 0; i < arrayOfSpaceDogs.length; i++) {
     ctx.drawImage(spaceDogsImage, arrayOfSpaceDogs[i].x, arrayOfSpaceDogs[i].y);
@@ -212,10 +228,15 @@ function draw() {
 
       // collisionWithThanos(arrayOfBalls[j]);
     }
-
-    //Checking if my current spaceDog collide with Wanda
     collisionWithWanda(arrayOfSpaceDogs[i]);
-    //collisionWithWomen(arrayOfSpaceDogs[i]);
+
+    if (collisionWithWomen(arrayOfSpaceDogs[i])) {
+      arrayOfSpaceDogs = [];
+    }
+  }
+
+  if (arrayOfSpaceDogs < 6) {
+    arrayOfSpaceDogs.push({ x: 1300 });
   }
 
   if (pressS) {
@@ -323,10 +344,10 @@ function collisionWithWomen(spaceDogs) {
   // actual collision check
 
   if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
-    arrayOfSpaceDogs.splice(i, 1);
-    //arrayOfSpaceDogs.push(i, 1);
+    return true;
+  } else {
+    return false;
   }
-  return false;
 }
 
 function collisionWithBall(currentBall, currentSpaceDog) {
@@ -378,7 +399,7 @@ function collisionWithBall(currentBall, currentSpaceDog) {
   }
 }*/
 
-let audio = new Audio("avengers_assemble_.mp3");
+//let audio = new Audio("avengers_assemble_.mp3");
 /*let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
