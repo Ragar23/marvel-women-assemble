@@ -9,6 +9,7 @@ let isArrowDown = false;
 let isArrowRight = false;
 let isArrowLeft = false;
 let pressS = false;
+let counterForHitThanos = 0;
 
 // Loading the Images
 
@@ -114,6 +115,8 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyS") {
     arrayOfBalls.push({ x: scarletX + 50, y: scarletY + 20 });
     pressS = true;
+
+    arrayOfSpaceDogs.push({ x: 1300 });
   }
 
   if (event.code == "ArrowLeft") {
@@ -180,12 +183,17 @@ function draw() {
         y: Math.floor(Math.random() * (canvas.height - spaceDogsImage.height)),
       };
     }
-    // for (let j = 0; j < arrayOfBalls.length; j++) {
-    //  if (collisionWithBall(arrayOfBalls[j], arrayOfUltrons[i])) {
-    //    arrayOfUltrons.splice(arrayOfUltrons[i], 1);
-    //    arrayOfBalls.splice(arrayOfBalls[j], 1);
-    //  }
-    // }
+
+    for (let j = 0; j < arrayOfBalls.length; j++) {
+      console.log("reach the loop");
+      if (collisionWithBall(arrayOfBalls[j], arrayOfSpaceDogs[i])) {
+        console.log("collision happened");
+        arrayOfSpaceDogs.splice(i, 1);
+        arrayOfBalls.splice(j, 1);
+        //i--;
+        //j--;
+      }
+    }
 
     //Checking if my current spaceDog collide with Wanda
     collisionWithWanda(arrayOfSpaceDogs[i]);
@@ -262,13 +270,13 @@ function collisionWithWanda(spaceDogs) {
   let scarletTop = scarletY;
   let scarletBottom = scarletY + wandaImage.height;
 
-  // letiables for easier reading
+  // variables to store the positions of the spaceDogs
   let spaceDogsLeft = spaceDogs.x;
   let spaceDogsRight = spaceDogs.x + spaceDogsImage.width;
   let spaceDogsTop = spaceDogs.y;
   let spaceDogsBottom = spaceDogs.y + spaceDogsImage.height;
 
-  // checks in letiables for easier reading
+  // checks the crash cases
   let crashRight =
     spaceDogsLeft <= scarletRight && spaceDogsRight >= scarletLeft;
   let crashLeft =
@@ -277,7 +285,8 @@ function collisionWithWanda(spaceDogs) {
   let crashBottom =
     spaceDogsBottom <= scarletBottom && spaceDogsBottom >= scarletTop;
 
-  // collision check
+  // actual collision check
+
   if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
     isGameOver = true;
   }
@@ -291,18 +300,26 @@ function collisionWithBall(currentBall, currentSpaceDog) {
   //Im writing the same thing twice.
   let spaceDogsLeft = currentSpaceDog.x;
   let spaceDogsRight = currentSpaceDog.x + spaceDogsImage.width;
+  let spaceDogsTop = currentSpaceDog.y;
+  let spaceDogsBottom = currentSpaceDog.y + spaceDogsImage.width;
 
   let ballsRight = currentBall.x + ballImage.width;
   let ballsLeft = currentBall.x;
+  let ballsTop = currentBall.y;
+  let ballsBottom = currentBall.y + ballImage.width;
 
-  if (ballsRight >= spaceDogsLeft && spaceDogsRight <= ballsLeft) {
+  let crashRight = spaceDogsLeft <= ballsRight && spaceDogsRight >= ballsLeft;
+  let crashLeft = spaceDogsRight >= ballsLeft && spaceDogsLeft <= ballsRight;
+  let crashTop = spaceDogsBottom >= ballsTop && spaceDogsTop <= ballsBottom;
+  let crashBottom =
+    spaceDogsBottom <= ballsBottom && spaceDogsBottom >= ballsTop;
+
+  if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
     return true;
-  } else {
-    return false;
   }
 }
-//let audio = new Audio("avengers_assemble_.mp3");
-let audio = new Audio(
+let audio = new Audio("avengers_assemble_.mp3");
+/*let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
 
@@ -314,7 +331,7 @@ audio.addEventListener(
     this.currentTime = 96;
   },
   false
-);
+);*/
 
 //Where some things happen
 window.addEventListener("load", () => {
@@ -324,7 +341,7 @@ window.addEventListener("load", () => {
   startBtn.addEventListener("click", () => {
     startTheGame();
     audio.play();
-    audio2.play();
+    //audio2.play();
     draw();
   });
 });
