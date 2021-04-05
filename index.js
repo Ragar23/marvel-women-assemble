@@ -55,6 +55,9 @@ waspImage.src = "./images/wasp.png";
 let shuriImage = new Image();
 shuriImage.src = "./images/shuri.png";
 
+let gamoraImage = new Image();
+gamoraImage.src = "./images/gamora.png";
+
 //The DOM Elements to Start the Game
 let startBtn = document.querySelector("#start-button");
 let backGround = document.querySelector("#FirsPart");
@@ -92,6 +95,7 @@ let thanosX = 1250;
 let thanosY = 0;
 //valkiria measures
 let valkiriaX = -6200;
+let valkiriaY = 50;
 //rescue measures
 let rescueX = -6200;
 //marvel
@@ -102,6 +106,8 @@ let okoyeX = -6200;
 let waspX = -6200;
 //shuri
 let shuriX = -6200;
+//gamora measuers
+let gamoraX = -6200;
 
 function drawScore() {
   ctx.font = "40px Marvel";
@@ -166,7 +172,7 @@ function draw() {
   ctx.drawImage(nebulaImage, nebulaX, 600);
   nebulaX = nebulaX - 3;
   ctx.drawImage(thanosImage, thanosX, 300);
-  ctx.drawImage(valkiriaImage, valkiriaX, 50);
+  ctx.drawImage(valkiriaImage, valkiriaX, valkiriaY);
   valkiriaX = valkiriaX + 2;
   ctx.drawImage(rescuePottsImage, rescueX, 150);
   rescueX = rescueX + 2;
@@ -178,6 +184,8 @@ function draw() {
   waspX += 2;
   ctx.drawImage(shuriImage, shuriX, 550);
   shuriX += 2;
+  ctx.drawImage(gamoraImage, gamoraX, 650);
+  gamoraX += +2;
   drawScore();
 
   //Looping over the Space Dogs
@@ -201,16 +209,16 @@ function draw() {
         //i--;
         //j--;
       }
+
       // collisionWithThanos(arrayOfBalls[j]);
     }
 
     //Checking if my current spaceDog collide with Wanda
     collisionWithWanda(arrayOfSpaceDogs[i]);
+    //collisionWithWomen(arrayOfSpaceDogs[i]);
   }
 
   if (pressS) {
-    //ctx.drawImage(shootBall, shootBallX, shootBallY);
-
     shootBallX = shootBallX + 5;
     for (let i = 0; i < arrayOfBalls.length; i++) {
       ctx.drawImage(ballImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
@@ -219,24 +227,21 @@ function draw() {
   }
 
   //Animate Scarlet Witch Wanda
-  if (isArrowDown && +scarletY < canvas.height) {
+  if (isArrowDown && scarletY + wandaImage.height < canvas.height) {
     scarletY = scarletY + 5;
   }
-  if (isArrowUp) {
+  if (isArrowUp && scarletY > 0) {
     scarletY = scarletY - 5;
   }
 
-  if (isArrowLeft && +scarletX < canvas.width) {
+  if (isArrowLeft && scarletX > 0) {
     scarletX = scarletX - 5;
   }
 
-  if (isArrowRight) {
+  if (isArrowRight && scarletX + wandaImage.width < canvas.width) {
     scarletX = scarletX + 5;
   }
   //EXAMPLE OF GAME OVER CONDITION
-  if (scarletY + wandaImage.height > canvas.height) {
-    isGameOver = true;
-  }
 
   //Game Over and Start Animation
   if (isGameOver) {
@@ -293,6 +298,37 @@ function collisionWithWanda(spaceDogs) {
   return false;
 }
 
+function collisionWithWomen(spaceDogs) {
+  let valkiriaLeft = valkiriaX;
+  let valkiriaRight = valkiriaX + valkiriaImage.width;
+  let valkiriaTop = valkiriaY;
+  let valkiriaBottom = valkiriaY + valkiriaImage.height;
+
+  // variables to store the positions of the spaceDogs
+  let spaceDogsLeft = spaceDogs.x;
+  let spaceDogsRight = spaceDogs.x + spaceDogsImage.width;
+  let spaceDogsTop = spaceDogs.y;
+  let spaceDogsBottom = spaceDogs.y + spaceDogsImage.height;
+
+  // checks the crash cases
+  let crashRight =
+    spaceDogsLeft <= valkiriaRight && spaceDogsRight >= valkiriaLeft;
+  let crashLeft =
+    spaceDogsRight >= valkiriaLeft && spaceDogsLeft <= valkiriaRight;
+  let crashTop =
+    spaceDogsBottom >= valkiriaTop && spaceDogsTop <= valkiriaBottom;
+  let crashBottom =
+    spaceDogsBottom <= valkiriaBottom && spaceDogsBottom >= valkiriaTop;
+
+  // actual collision check
+
+  if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
+    arrayOfSpaceDogs.splice(i, 1);
+    //arrayOfSpaceDogs.push(i, 1);
+  }
+  return false;
+}
+
 function collisionWithBall(currentBall, currentSpaceDog) {
   //console.log(currentBall);
   //I give two parameters because the space dogs are not defined inside the function
@@ -342,7 +378,7 @@ function collisionWithBall(currentBall, currentSpaceDog) {
   }
 }*/
 
-//let audio = new Audio("avengers_assemble_.mp3");
+let audio = new Audio("avengers_assemble_.mp3");
 /*let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
