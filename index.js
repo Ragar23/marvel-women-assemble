@@ -74,6 +74,8 @@ let bodyImage = document.querySelector("body");
 let instru = document.querySelector("#howToPlay");
 let marvelStudios = document.querySelector("#studios");
 let audioFirstScreen = document.querySelector("#audio");
+let backToStart = document.querySelector("#backTo-button");
+let finalScoreDisplay = document.querySelector("#finalScore");
 
 //Scarlet measures
 let scarletX = 0,
@@ -86,12 +88,12 @@ let incrX = 5;
 //SpaceDogs Measures
 let spaceDogsX = 1200;
 
-//shoot measures
+//Ball measures
 let shootBallX = scarletX;
 let shootBallY = scarletY;
 
 let arrayOfBalls = [];
-let incrBall = 3;
+let incrBall = 8;
 
 //proxima measures
 let proximaX = 2200;
@@ -118,17 +120,34 @@ let shuriX = -6200;
 //gamora measuers
 let gamoraX = -6200;
 
+let grootX = 85;
+let grootY = 670;
+
 function drawScore() {
   ctx.font = "40px Marvel";
   ctx.fillStyle = "#fd0202";
   ctx.fillText(`MARVEL POINTS ${pointsCounter}`, 20, 50);
 }
 
-function yourEndScore() {
+function finalScore() {
+  console.log("final score");
+  if (
+    finalScoreDisplay.innerText ==
+    "You've reached a score of 0 points by killing the space dogs!"
+  ) {
+    finalScoreDisplay.innerText = `You've reached a score of ${pointsCounter} points by killing the space dogs!`;
+  } else {
+    finalScoreDisplay.innerText =
+      "You've reached a score of 0 points by killing the space dogs!";
+  }
+}
+
+//To see your final score
+/*function yourEndScore() {
   ctx.font = "40px Marvel";
   ctx.fillStyle = "#fd0202";
   ctx.fillText(`MARVEL POINTS ${pointsCounter}`, 20, 50);
-}
+}*/
 
 //setting Wanda's controllers
 document.addEventListener("keydown", (event) => {
@@ -176,47 +195,48 @@ let arrayOfSpaceDogs = [
   { x: 1600, y: 50 },
 ];
 
-let displayGroot = true;
+function grootDancing() {
+  intervalId++;
+
+  if (intervalId % 21 === 0) {
+    ctx.drawImage(grootLeftImage, grootX, grootY);
+  } else if (intervalId % 8 === 0) {
+    ctx.drawImage(grootRightImage, grootX, grootY);
+  }
+}
 
 //My Functions for the Game
 function draw() {
   ctx.drawImage(bg, 0, 0);
   ctx.drawImage(wandaImage, scarletX, scarletY);
   ctx.drawImage(proximaImage, proximaX, 200);
-  proximaX = proximaX - 2;
+  proximaX = proximaX - 4;
   ctx.drawImage(corvusImage, corvusX, 350);
-  corvusX = corvusX - 4;
+  corvusX = corvusX - 8;
   ctx.drawImage(nebulaImage, nebulaX, 600);
-  nebulaX = nebulaX - 3;
+  nebulaX = nebulaX - 6;
   ctx.drawImage(thanosImage, thanosX, 300);
   ctx.drawImage(valkiriaImage, valkiriaX, valkiriaY);
-  valkiriaX = valkiriaX + 2;
+  valkiriaX = valkiriaX + 4;
   ctx.drawImage(rescuePottsImage, rescueX, 150);
-  rescueX = rescueX + 2;
+  rescueX = rescueX + 4;
   ctx.drawImage(marvelImage, marvelX, 250);
-  marvelX = marvelX + 4;
+  marvelX = marvelX + 8;
   ctx.drawImage(okoyeImage, okoyeX, 350);
-  okoyeX += 2;
+  okoyeX += 4;
   ctx.drawImage(waspImage, waspX, 450);
-  waspX += 2;
+  waspX += 4;
   ctx.drawImage(shuriImage, shuriX, 550);
-  shuriX += 2;
+  shuriX += 4;
   ctx.drawImage(gamoraImage, gamoraX, 650);
-  gamoraX += +2;
+  gamoraX += 4;
+  //Calling the function to draw the score
   drawScore();
-
-  if (displayGroot) {
-    ctx.drawImage(grootLeftImage, 50, 650);
-    displayGroot = false;
-  } else {
-    ctx.drawImage(grootRightImage, 50, 650);
-    displayGroot = true;
-  }
 
   //Looping over the Space Dogs
   for (let i = 0; i < arrayOfSpaceDogs.length; i++) {
     ctx.drawImage(spaceDogsImage, arrayOfSpaceDogs[i].x, arrayOfSpaceDogs[i].y);
-    arrayOfSpaceDogs[i].x = arrayOfSpaceDogs[i].x - 3;
+    arrayOfSpaceDogs[i].x = arrayOfSpaceDogs[i].x - 6;
 
     if (arrayOfSpaceDogs[i].x + spaceDogsImage.width < 0) {
       arrayOfSpaceDogs[i] = {
@@ -249,7 +269,6 @@ function draw() {
   }
 
   if (pressS) {
-    shootBallX = shootBallX + 5;
     for (let i = 0; i < arrayOfBalls.length; i++) {
       ctx.drawImage(ballImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
       arrayOfBalls[i].x += incrBall;
@@ -258,20 +277,21 @@ function draw() {
 
   //Animate Scarlet Witch Wanda
   if (isArrowDown && scarletY + wandaImage.height < canvas.height) {
-    scarletY = scarletY + 5;
+    scarletY = scarletY + 10;
   }
   if (isArrowUp && scarletY > 0) {
-    scarletY = scarletY - 5;
+    scarletY = scarletY - 10;
   }
 
   if (isArrowLeft && scarletX > 0) {
-    scarletX = scarletX - 5;
+    scarletX = scarletX - 10;
   }
 
   if (isArrowRight && scarletX + wandaImage.width < canvas.width) {
-    scarletX = scarletX + 5;
+    scarletX = scarletX + 10;
   }
-  //EXAMPLE OF GAME OVER CONDITION
+
+  grootDancing();
 
   //Game Over and Start Animation
   if (isGameOver) {
@@ -279,6 +299,9 @@ function draw() {
     backGround.style.display = "block";
     gameOvBtn.style.display = "block";
     endGameScreen.style.display = "block";
+    backToStart.style.display = "block";
+    finalScore();
+
     audio.pause();
     audio2.pause();
 
@@ -299,6 +322,7 @@ function startTheGame() {
   marvelStudios.style.display = "none";
   audioFirstScreen.pause();
   audioFirstScreen.style.display = "none";
+  backToStart.style.display = "none";
   audio.play();
   audio2.play();
   draw();
@@ -307,6 +331,7 @@ function startTheGame() {
 //Resetting all my variables
 function restartVariables() {
   isGameOver = false;
+  pointsCounter = 0;
   audio.play();
   audio2.play();
   scarletX = 0;
@@ -322,7 +347,6 @@ function restartVariables() {
     { x: 1900, y: 250 },
     { x: 1600, y: 50 },
   ];
-  pointsCounter = 0;
   proximaX = 2200;
   corvusX = 1400;
   nebulaX = 1800;
@@ -336,6 +360,7 @@ function restartVariables() {
   waspX = -6200;
   shuriX = -6200;
   gamoraX = -6200;
+  finalScore();
 }
 
 //When SpaceDogs crash with Wanda = Game Over
@@ -448,6 +473,7 @@ function collisionWithBall(currentBall, currentSpaceDog) {
   }
 }*/
 
+//AUDIO SETTINGS
 //let audio = new Audio("avengers_assemble_.mp3");
 let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
@@ -477,15 +503,37 @@ window.addEventListener("load", () => {
   canvas.style.display = "none";
   gameOvBtn.style.display = "none";
   endGameScreen.style.display = "none";
+  backToStart.style.display = "none";
   startBtn.addEventListener("click", () => {
     startTheGame();
-    draw();
 
     //audio2.play();
   });
   gameOvBtn.addEventListener("click", () => {
     restartVariables();
     startTheGame();
-    draw();
   });
+
+  /*backToStart.addEventListener("click", () => {
+    endGameScreen.style.display = "none";
+    backToStart.style.display = "none";
+    backGround.style.display = "block";
+    marvelStudios.style.display = "block";
+    instru.style.display = "block";
+    gameOvBtn.style.display = "none";
+    startBtn.style.display = "block";
+
+    audioFirstScreen.play();
+  }); */
 });
+
+/*canvas.style.display = "block";
+startBtn.style.display = "none";
+backGround.style.display = "none";
+gameOvBtn.style.display = "none";
+endGameScreen.style.display = "none";
+instru.style.display = "none";
+marvelStudios.style.display = "none";
+audioFirstScreen.pause();
+audioFirstScreen.style.display = "none";
+backToStart.style.display = "none";*/
