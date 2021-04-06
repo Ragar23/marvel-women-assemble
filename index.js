@@ -163,7 +163,6 @@ document.addEventListener("keyup", () => {
   isArrowLeft = false;
 });
 
-let arrayOfSpaceDogsX = 1300;
 //My Space Dogs
 let arrayOfSpaceDogs = [
   { x: 1800, y: 300 },
@@ -281,6 +280,7 @@ function draw() {
     gameOvBtn.style.display = "block";
     endGameScreen.style.display = "block";
     audio.pause();
+    audio2.pause();
 
     cancelAnimationFrame(intervalId);
   } else {
@@ -304,11 +304,38 @@ function startTheGame() {
   draw();
 }
 
-function restartGame() {
+//Resetting all my variables
+function restartVariables() {
   isGameOver = false;
+  audio.play();
+  audio2.play();
   scarletX = 0;
   scarletY = 50;
-  startTheGame();
+  arrayOfSpaceDogs = [
+    { x: 1800, y: 300 },
+    { x: 1700, y: 100 },
+    { x: 2000, y: 150 },
+    { x: 1300, y: 60 },
+    { x: 1200, y: 500 },
+    { x: 1100, y: 400 },
+    { x: 2300, y: 200 },
+    { x: 1900, y: 250 },
+    { x: 1600, y: 50 },
+  ];
+  pointsCounter = 0;
+  proximaX = 2200;
+  corvusX = 1400;
+  nebulaX = 1800;
+  thanosX = 1250;
+  thanosY = 0;
+  valkiriaX = -6200;
+  valkiriaY = 50;
+  rescueX = -6200;
+  marvelX = -11600;
+  okoyeX = -6200;
+  waspX = -6200;
+  shuriX = -6200;
+  gamoraX = -6200;
 }
 
 //When SpaceDogs crash with Wanda = Game Over
@@ -452,12 +479,13 @@ window.addEventListener("load", () => {
   endGameScreen.style.display = "none";
   startBtn.addEventListener("click", () => {
     startTheGame();
+    draw();
 
     //audio2.play();
-    draw();
   });
   gameOvBtn.addEventListener("click", () => {
-    console.log(restartGame());
-    restartGame();
+    restartVariables();
+    startTheGame();
+    draw();
   });
 });
