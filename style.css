@@ -38,6 +38,12 @@ header {
   transition: transform 0.4s;
   text-shadow: 10px 2px #000000;
   margin-bottom: 50px;
+  letter-spacing: 0.4cm;
+}
+
+#start-button:hover {
+  transform: scale(1.15);
+  letter-spacing: 0.6cm;
 }
 
 #theButtonStart {
@@ -47,6 +53,7 @@ header {
 
 #commands {
   list-style: none;
+  line-height: 2.8rem;
 }
 
 #end-game-button {
@@ -58,16 +65,20 @@ header {
 #end-button {
   color: #ffffff;
   font-size: 60px;
-  background: #eb0404;
-  padding: 20px 60px 20px 60px;
+  background: red;
+  padding: 20px 40px 20px 60px;
   cursor: pointer;
   font-family: "Marvel";
   box-shadow: 20px 5px 5px black;
   transition: transform 0.4s;
+  letter-spacing: 1rem;
   text-shadow: 10px 0px 0px #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.4s;
+}
+
+#end-button:hover {
+  transform: scale(1.15);
+  letter-spacing: 0.6cm;
 }
 
 #howToPlay {
@@ -87,14 +98,13 @@ body {
   height: 780px;
 }
 
-#start-button:hover {
-  transform: scale(1.15);
-  letter-spacing: 0.6cm;
-}
-
 #GameOverScreen {
   background-size: 100%;
+  background-color: whitesmoke;
   margin-top: 50px;
   border: 10px 10px;
-  background-image: url("./images/Marvelstudios.png");
+  text-align: center;
+  font-family: "Marvel";
+  font-size: 60px;
+  letter-spacing: 0.2rem;
 }

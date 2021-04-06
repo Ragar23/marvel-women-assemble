@@ -10,31 +10,35 @@
 
   <body>
     <header>
-      <div id="studios"><img  src="images/Marvelstudios.png">
-      </div>
+      <div id="studios"><img src="images/Marvelstudios.png" /></div>
 
-    <div id="FirsPart">
-    </div>
+      <div id="FirsPart"></div>
+    </header>
 
-  </header>
-
-  <audio id="audio" src="./Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3" preload="none" controls>  </audio>
+    <audio
+      id="audio"
+      src="Alan Silvestri - No Trust (From Avengers EndgameAudio Only).mp3"
+      preload="none"
+      controls
+    ></audio>
 
     <div id="howToPlay">
       <section>
-        <img src="images/mWmn.png">
-
-       
+        <img src="images/mWmn.png" />
 
         <h2>HOW TO PLAY?</h2>
-        <p>Your mission is to prevent the space dogs from getting to you.</p>
+        <p>
+          Your mission is to prevent the space dogs from getting to you. For
+          each space dog you kill, you get 10 points
+        </p>
         <h2>KEYBOARD INSTRUCTIONS</h2>
+
         <ul id="commands">
           <li>ArrowUp --> moves up</li>
           <li>ArrowDown --> moves down</li>
           <li>ArrowLeft --> moves forward</li>
           <li>ArrowRight --> moves backwards</li>
-         <!--<li>Press S shoots--> </li>
+          <li>Press S --> shoots</li>
         </ul>
       </section>
     </div>
@@ -43,14 +47,16 @@
       <button id="start-button">START</button>
     </div>
 
-    <div id="GameOverScreen">
-<h2> YOU HAVE LOST. HALF OF THE UNIVERSE HAS BEEN ERASED </h2>
+    <section>
+      <div id="GameOverScreen">
+        <h2>YOU SHOULD HAVE GONE FOR THE HEAD</h2>
+        <p></p>
+      </div>
 
-    </div>
-
-    <div id="end-game-button">
-      <button id="end-button">END GAME</button>
-    </div>
+      <div id="end-game-button">
+        <button id="end-button">TRY AGAIN</button>
+      </div>
+    </section>
 
     <div id="centerCanvas">
       <canvas id="myCanvas" width="1364" height="768"></canvas>

@@ -73,6 +73,7 @@ let endGameScreen = document.querySelector("#GameOverScreen");
 let bodyImage = document.querySelector("body");
 let instru = document.querySelector("#howToPlay");
 let marvelStudios = document.querySelector("#studios");
+let audioFirstScreen = document.querySelector("#audio");
 
 //Scarlet measures
 let scarletX = 0,
@@ -123,6 +124,12 @@ function drawScore() {
   ctx.fillText(`MARVEL POINTS ${pointsCounter}`, 20, 50);
 }
 
+function yourEndScore() {
+  ctx.font = "40px Marvel";
+  ctx.fillStyle = "#fd0202";
+  ctx.fillText(`MARVEL POINTS ${pointsCounter}`, 20, 50);
+}
+
 //setting Wanda's controllers
 document.addEventListener("keydown", (event) => {
   if (event.code == "ArrowUp") {
@@ -156,6 +163,7 @@ document.addEventListener("keyup", () => {
   isArrowLeft = false;
 });
 
+let arrayOfSpaceDogsX = 1300;
 //My Space Dogs
 let arrayOfSpaceDogs = [
   { x: 1800, y: 300 },
@@ -289,7 +297,18 @@ function startTheGame() {
   endGameScreen.style.display = "none";
   instru.style.display = "none";
   marvelStudios.style.display = "none";
+  audioFirstScreen.pause();
+  audioFirstScreen.style.display = "none";
+  audio.play();
+  audio2.play();
   draw();
+}
+
+function restartGame() {
+  isGameOver = false;
+  scarletX = 0;
+  scarletY = 50;
+  startTheGame();
 }
 
 //When SpaceDogs crash with Wanda = Game Over
@@ -403,7 +422,7 @@ function collisionWithBall(currentBall, currentSpaceDog) {
 }*/
 
 //let audio = new Audio("avengers_assemble_.mp3");
-/*let audio = new Audio(
+let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
 
@@ -415,7 +434,16 @@ audio.addEventListener(
     this.currentTime = 96;
   },
   false
-);*/
+);
+
+//Timer for first Audio in splashScreen
+audioFirstScreen.addEventListener(
+  "loadedmetadata",
+  function () {
+    this.currentTime = 162;
+  },
+  false
+);
 
 //Where some things happen
 window.addEventListener("load", () => {
@@ -424,8 +452,12 @@ window.addEventListener("load", () => {
   endGameScreen.style.display = "none";
   startBtn.addEventListener("click", () => {
     startTheGame();
-    audio.play();
+
     //audio2.play();
     draw();
+  });
+  gameOvBtn.addEventListener("click", () => {
+    console.log(restartGame());
+    restartGame();
   });
 });
