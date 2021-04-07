@@ -336,6 +336,7 @@ function restartVariables() {
   audio2.play();
   scarletX = 0;
   scarletY = 50;
+  arrayOfBalls = [];
   arrayOfSpaceDogs = [
     { x: 1800, y: 300 },
     { x: 1700, y: 100 },
@@ -526,14 +527,3 @@ window.addEventListener("load", () => {
     audioFirstScreen.play();
   }); */
 });
-
-/*canvas.style.display = "block";
-startBtn.style.display = "none";
-backGround.style.display = "none";
-gameOvBtn.style.display = "none";
-endGameScreen.style.display = "none";
-instru.style.display = "none";
-marvelStudios.style.display = "none";
-audioFirstScreen.pause();
-audioFirstScreen.style.display = "none";
-backToStart.style.display = "none";*/
