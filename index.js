@@ -68,6 +68,9 @@ grootRightImage.src = "./images/babyGrootLeft.png";
 let blastImage = new Image();
 blastImage.src = "./images/blast.png";
 
+let stanLeeImage = new Image();
+stanLeeImage.src = "./images/StanLee.png";
+
 let grootCurrentImage = grootLeftImage;
 let grootOtherImage = grootRightImage;
 
@@ -108,33 +111,35 @@ let shootBallY = scarletY;
 let arrayOfBalls = [];
 let incrBall = 8;
 
-//proxima measures
-let proximaX = 2200;
-//coruvs measures
-let corvusX = 1400;
-//nebula measures
-let nebulaX = 1800;
-//thanos measures
+//proxima position
+let proximaX = 8100;
+//coruvs position
+let corvusX = 8000;
+//nebula position
+let nebulaX = 7900;
+//thanos position
 let thanosX = 1250;
 let thanosY = 0;
-//valkiria measures
+//valkiria position
 let valkiriaX = -6200;
 let valkiriaY = 50;
-//rescue measures
+//rescue position
 let rescueX = -6200;
-//cp marvel measures
+//cp marvel position
 let marvelX = -11600;
-//okoye measures
+//okoye position
 let okoyeX = -6200;
-//wasp measures
+//wasp position
 let waspX = -6200;
-//shuri measures
+//shuri position
 let shuriX = -6200;
-//gamora measures
+//gamora position
 let gamoraX = -6200;
-//Groot measures
+//Groot position
 let grootX = 85;
 let grootY = 670;
+//Stan lee position
+let stanLeeImageX = -3000;
 
 function drawScore() {
   ctx.font = "40px Marvel";
@@ -222,8 +227,6 @@ function draw() {
     ctx.drawImage(marvelImage, scarletX, scarletY);
   }
 
-  //statement for choosing shot thingy
-
   //ctx.drawImage(wandaImage, scarletX, scarletY);
   ctx.drawImage(proximaImage, proximaX, 200);
   proximaX = proximaX - 4;
@@ -246,8 +249,11 @@ function draw() {
   shuriX += 4;
   ctx.drawImage(gamoraImage, gamoraX, 650);
   gamoraX += 4;
+  ctx.drawImage(stanLeeImage, stanLeeImageX, 670);
+  stanLeeImageX += 4;
   //Calling the function to draw the score on the canvas
   drawScore();
+  //calling groot to show up in the canvas
   grootDancing();
 
   //Looping over the Space Dogs
