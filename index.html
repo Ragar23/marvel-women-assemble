@@ -9,9 +9,8 @@
   </head>
 
   <body>
-    <header>
-      <div id="studios"><img src="images/Marvelstudios.png" /></div>
-
+    <header id="hideHeader">
+      <div id="studios"><img src="images/mWmn.png" /></div>
       <div id="FirsPart"></div>
     </header>
 
@@ -22,35 +21,40 @@
       controls
     ></audio>
 
-    <div id="howToPlay">
-      <section>
-        <img src="images/mWmn.png" />
+    <section id="howToPlay">
+      <div>
+        <div class="part">
+          <h2>HOW TO PLAY?</h2>
+          <p>
+            Your mission is to prevent the space dogs from getting to you. For
+            each space dog you kill, you get 10 points!
+          </p>
+        </div>
 
-        <h2>HOW TO PLAY?</h2>
-        <p>
-          Your mission is to prevent the space dogs from getting to you. For
-          each space dog you kill, you get 10 points
-        </p>
-        <h2>KEYBOARD INSTRUCTIONS</h2>
+        <div class="part">
+          <h2>CHOOSE A CHARACTER</h2>
+          <img id="cpMarvel" src="images/marvel.png" />
 
-        <ul id="commands">
-          <li>ArrowUp --> moves up</li>
-          <li>ArrowDown --> moves down</li>
-          <li>ArrowLeft --> moves forward</li>
-          <li>ArrowRight --> moves backwards</li>
-          <li>Press S --> shoots</li>
-        </ul>
+          <img id="wanda" src="images/scarlet-witch.png" />
 
-        <h2>CHOOSE A CHARACTER</h2>
-        <img id="cpMarvel" src="images/marvel.png" />
+          <div id="theButtonStart">
+            <button id="start-button">START</button>
+          </div>
+        </div>
 
-        <img id="wanda" src="images/scarlet-witch.png" />
-      </section>
-    </div>
+        <div class="part">
+          <h2>KEYBOARD INSTRUCTIONS</h2>
 
-    <div id="theButtonStart">
-      <button id="start-button">START</button>
-    </div>
+          <ul id="commands">
+            <li>ArrowUp --> moves up</li>
+            <li>ArrowDown --> moves down</li>
+            <li>ArrowLeft --> moves forward</li>
+            <li>ArrowRight --> moves backwards</li>
+            <li>Press S --> shoots</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
     <section>
       <div id="GameOverScreen">

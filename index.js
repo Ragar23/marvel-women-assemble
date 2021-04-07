@@ -84,6 +84,7 @@ let gameOvBtn = document.querySelector("#end-button");
 let endGameScreen = document.querySelector("#GameOverScreen");
 let bodyImage = document.querySelector("body");
 let instru = document.querySelector("#howToPlay");
+let hideHeader = document.querySelector("#hideHeader");
 let marvelStudios = document.querySelector("#studios");
 let audioFirstScreen = document.querySelector("#audio");
 audioFirstScreen.volume = 0.1;
@@ -354,13 +355,15 @@ function startTheGame() {
   backGround.style.display = "none";
   gameOvBtn.style.display = "none";
   endGameScreen.style.display = "none";
+  hideHeader.style.display = "none";
   instru.style.display = "none";
   marvelStudios.style.display = "none";
   audioFirstScreen.pause();
   audioFirstScreen.style.display = "none";
   backToStart.style.display = "none";
-  //audio.play();
+  audio.play();
   audio2.play();
+  audio2.volume = 0.1;
   draw();
 }
 
@@ -589,7 +592,7 @@ window.addEventListener("load", () => {
   startBtn.addEventListener("click", () => {
     startTheGame();
 
-    //audio2.play();
+    audio2.play();
   });
   gameOvBtn.addEventListener("click", () => {
     resetVariables();
