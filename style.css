@@ -24,6 +24,7 @@
 
 #wanda:hover {
   transform: scale(2.15);
+  border: none;
 }
 
 #wanda {
