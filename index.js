@@ -65,6 +65,9 @@ grootLeftImage.src = "./images/babyGroot.png";
 let grootRightImage = new Image();
 grootRightImage.src = "./images/babyGrootLeft.png";
 
+let grootCurrentImage = grootLeftImage;
+let grootOtherImage = grootRightImage;
+
 //The DOM Elements to Start the Game
 let startBtn = document.querySelector("#start-button");
 let backGround = document.querySelector("#FirsPart");
@@ -76,6 +79,8 @@ let marvelStudios = document.querySelector("#studios");
 let audioFirstScreen = document.querySelector("#audio");
 let backToStart = document.querySelector("#backTo-button");
 let finalScoreDisplay = document.querySelector("#finalScore");
+let cpMarvelPlayer = document.querySelector("#cpMarvel");
+let wandaPlayer = document.querySelector("#wanda");
 
 //Scarlet measures
 let scarletX = 0,
@@ -84,6 +89,11 @@ let scarletX = 0,
   scarletWidth = 200;
 let incrY = 5;
 let incrX = 5;
+
+//Choosing character
+let wandaCharacter = wandaImage;
+let cpMarvelCharacter = marvelImage;
+let chooseCharacter = "";
 
 //SpaceDogs Measures
 let spaceDogsX = 1200;
@@ -109,17 +119,17 @@ let valkiriaX = -6200;
 let valkiriaY = 50;
 //rescue measures
 let rescueX = -6200;
-//marvel
+//cp marvel measures
 let marvelX = -11600;
 //okoye measures
 let okoyeX = -6200;
-//wasp
+//wasp measures
 let waspX = -6200;
-//shuri
+//shuri measures
 let shuriX = -6200;
-//gamora measuers
+//gamora measures
 let gamoraX = -6200;
-
+//Groot measures
 let grootX = 85;
 let grootY = 670;
 
@@ -141,13 +151,6 @@ function finalScore() {
       "You've reached a score of 0 points by killing the space dogs!";
   }
 }
-
-//To see your final score
-/*function yourEndScore() {
-  ctx.font = "40px Marvel";
-  ctx.fillStyle = "#fd0202";
-  ctx.fillText(`MARVEL POINTS ${pointsCounter}`, 20, 50);
-}*/
 
 //setting Wanda's controllers
 document.addEventListener("keydown", (event) => {
@@ -195,20 +198,28 @@ let arrayOfSpaceDogs = [
   { x: 1600, y: 50 },
 ];
 
+let grootStanding = true;
+//To animate Groot
 function grootDancing() {
-  intervalId++;
+  let myImage = grootStanding ? grootCurrentImage : grootOtherImage;
+  ctx.drawImage(myImage, grootX, grootY);
 
-  if (intervalId % 21 === 0) {
-    ctx.drawImage(grootLeftImage, grootX, grootY);
-  } else if (intervalId % 8 === 0) {
-    ctx.drawImage(grootRightImage, grootX, grootY);
+  if (intervalId % 30 === 0) {
+    grootStanding = !grootStanding;
   }
 }
 
 //My Functions for the Game
 function draw() {
   ctx.drawImage(bg, 0, 0);
-  ctx.drawImage(wandaImage, scarletX, scarletY);
+  //I need to check which character the user has chosen
+  if (chooseCharacter === "wanda") {
+    ctx.drawImage(wandaImage, scarletX, scarletY);
+  } else if (chooseCharacter === "cpMarvel") {
+    ctx.drawImage(marvelImage, scarletX, scarletY);
+  }
+
+  //ctx.drawImage(wandaImage, scarletX, scarletY);
   ctx.drawImage(proximaImage, proximaX, 200);
   proximaX = proximaX - 4;
   ctx.drawImage(corvusImage, corvusX, 350);
@@ -230,8 +241,9 @@ function draw() {
   shuriX += 4;
   ctx.drawImage(gamoraImage, gamoraX, 650);
   gamoraX += 4;
-  //Calling the function to draw the score
+  //Calling the function to draw the score on the canvas
   drawScore();
+  grootDancing();
 
   //Looping over the Space Dogs
   for (let i = 0; i < arrayOfSpaceDogs.length; i++) {
@@ -291,8 +303,6 @@ function draw() {
     scarletX = scarletX + 10;
   }
 
-  grootDancing();
-
   //Game Over and Start Animation
   if (isGameOver) {
     canvas.style.display = "none";
@@ -323,7 +333,7 @@ function startTheGame() {
   audioFirstScreen.pause();
   audioFirstScreen.style.display = "none";
   backToStart.style.display = "none";
-  audio.play();
+  //audio.play();
   audio2.play();
   draw();
 }
@@ -332,8 +342,6 @@ function startTheGame() {
 function restartVariables() {
   isGameOver = false;
   pointsCounter = 0;
-  audio.play();
-  audio2.play();
   scarletX = 0;
   scarletY = 50;
   arrayOfBalls = [];
@@ -362,6 +370,8 @@ function restartVariables() {
   shuriX = -6200;
   gamoraX = -6200;
   finalScore();
+  //audio.pause();
+  audio2.load();
 }
 
 //When SpaceDogs crash with Wanda = Game Over
@@ -475,22 +485,21 @@ function collisionWithBall(currentBall, currentSpaceDog) {
 }*/
 
 //AUDIO SETTINGS
-//let audio = new Audio("avengers_assemble_.mp3");
-let audio = new Audio(
+/*let audio = new Audio(
   "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
-);
+);*/
 
 let audio2 = new Audio("avengers_assemble_.mp3");
 
-audio.addEventListener(
+/*audio.addEventListener(
   "loadedmetadata",
   function () {
     this.currentTime = 96;
   },
   false
-);
+);*/
 
-//Timer for first Audio in splashScreen
+//Timer for first Audio in splashScreen to start when I want
 audioFirstScreen.addEventListener(
   "loadedmetadata",
   function () {
@@ -505,6 +514,13 @@ window.addEventListener("load", () => {
   gameOvBtn.style.display = "none";
   endGameScreen.style.display = "none";
   backToStart.style.display = "none";
+
+  wandaPlayer.addEventListener("click", () => {
+    chooseCharacter = "wanda";
+  });
+  cpMarvelPlayer.addEventListener("click", () => {
+    chooseCharacter = "cpMarvel";
+  });
   startBtn.addEventListener("click", () => {
     startTheGame();
 
@@ -515,7 +531,7 @@ window.addEventListener("load", () => {
     startTheGame();
   });
 
-  /*backToStart.addEventListener("click", () => {
+  backToStart.addEventListener("click", () => {
     endGameScreen.style.display = "none";
     backToStart.style.display = "none";
     backGround.style.display = "block";
@@ -523,7 +539,7 @@ window.addEventListener("load", () => {
     instru.style.display = "block";
     gameOvBtn.style.display = "none";
     startBtn.style.display = "block";
-
-    audioFirstScreen.play();
-  }); */
+    audioFirstScreen.style.display = "block";
+    restartVariables();
+  });
 });
