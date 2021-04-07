@@ -603,6 +603,7 @@ window.addEventListener("load", () => {
     endGameScreen.style.display = "none";
     backToStart.style.display = "none";
     backGround.style.display = "block";
+    hideHeader.style.display = "block";
     marvelStudios.style.display = "block";
     instru.style.display = "block";
     gameOvBtn.style.display = "none";
