@@ -22,8 +22,24 @@
   justify-content: center;
 }
 
-#wandaCharacter {
+#wanda:hover {
+  transform: scale(2.15);
 }
+
+#wanda {
+  transition: transform 0.4s;
+  cursor: pointer;
+}
+
+#cpMarvel {
+  transition: transform 0.4s;
+  cursor: pointer;
+}
+
+#cpMarvel:hover {
+  transform: scale(2.15);
+}
+
 p {
   font-size: 35px;
 }

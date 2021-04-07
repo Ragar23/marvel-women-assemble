@@ -65,6 +65,9 @@ grootLeftImage.src = "./images/babyGroot.png";
 let grootRightImage = new Image();
 grootRightImage.src = "./images/babyGrootLeft.png";
 
+let blastImage = new Image();
+blastImage.src = "./images/blast.png";
+
 let grootCurrentImage = grootLeftImage;
 let grootOtherImage = grootRightImage;
 
@@ -219,6 +222,8 @@ function draw() {
     ctx.drawImage(marvelImage, scarletX, scarletY);
   }
 
+  //statement for choosing shot thingy
+
   //ctx.drawImage(wandaImage, scarletX, scarletY);
   ctx.drawImage(proximaImage, proximaX, 200);
   proximaX = proximaX - 4;
@@ -282,7 +287,11 @@ function draw() {
 
   if (pressS) {
     for (let i = 0; i < arrayOfBalls.length; i++) {
-      ctx.drawImage(ballImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
+      if (chooseCharacter === "wanda") {
+        ctx.drawImage(ballImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
+      } else if (chooseCharacter === "cpMarvel") {
+        ctx.drawImage(blastImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
+      }
       arrayOfBalls[i].x += incrBall;
     }
   }
