@@ -74,8 +74,14 @@ stanLeeImage.src = "./images/StanLee.png";
 let gaunletImage = new Image();
 gaunletImage.src = "./images/stones.png";
 
-let grootCurrentImage = grootLeftImage;
-let grootOtherImage = grootRightImage;
+let mantisImage = new Image();
+mantisImage.src = "./images/mantis.png";
+
+let leviImage = new Image();
+leviImage.src = "./images/levi.png";
+
+let spidermanImage = new Image();
+spidermanImage.src = "./images/spiderman.png";
 
 //The DOM Elements to Start the Game
 let startBtn = document.querySelector("#start-button");
@@ -117,14 +123,16 @@ let arrayOfBalls = [];
 let incrBall = 8;
 
 //proxima position
-let proximaX = 8400;
+let proximaX = 8800;
 //coruvs position
-let corvusX = 8500;
+let corvusX = 8000;
 //nebula position
-let nebulaX = 8600;
+let nebulaX = 8400;
 //thanos position
 let thanosX = 1250;
 let thanosY = 0;
+//levi position
+let leviX = 8350;
 //valkiria position
 let valkiriaX = -6200;
 let valkiriaY = 50;
@@ -146,8 +154,13 @@ let grootY = 670;
 //Stan lee position
 let stanLeeImageX = -3000;
 //gaunlet position
-let gaunletImageX = 150;
-let gaunletImageY = 670;
+let gaunletImageX = 0;
+let gaunletImageY = 450;
+//spiderman image
+let spidermanImageX = 20;
+let spidermanImageY = 480;
+//mantis position
+let mantisX = -6200;
 
 function drawScore() {
   ctx.font = "40px Marvel";
@@ -184,6 +197,7 @@ document.addEventListener("keydown", (event) => {
     pressS = true;
 
     arrayOfSpaceDogs.push({ x: 1300 });
+    arrayOfChitauris.push({ x: 1300, x: 1300, x: 1300 });
   }
 
   if (event.code == "ArrowLeft") {
@@ -202,7 +216,7 @@ document.addEventListener("keyup", () => {
   isArrowLeft = false;
 });
 
-//My Space Dogs
+//The Space Dogs
 let arrayOfSpaceDogs = [
   { x: 1800, y: 300 },
   { x: 1700, y: 100 },
@@ -215,14 +229,89 @@ let arrayOfSpaceDogs = [
   { x: 1600, y: 50 },
 ];
 
+//The chitarui
+
+let arrayOfChitauris = [
+  { x: 11800, y: 100 },
+  { x: 11700, y: 300 },
+  { x: 21000, y: 60 },
+  { x: 11300, y: 150 },
+  { x: 12100, y: 400 },
+  { x: 11100, y: 500 },
+  { x: 23100, y: 250 },
+  { x: 19100, y: 200 },
+  { x: 16100, y: 100 },
+];
+
 let grootStanding = true;
 //To animate Groot
 function grootDancing() {
-  let myImage = grootStanding ? grootCurrentImage : grootOtherImage;
+  let myImage = grootStanding ? grootLeftImage : grootRightImage;
   ctx.drawImage(myImage, grootX, grootY);
 
   if (intervalId % 30 === 0) {
     grootStanding = !grootStanding;
+  }
+}
+
+// image files
+
+let chit2 = new Image();
+chit2.src = "./images/chit2.png";
+
+let chit3 = new Image();
+chit3.src = "./images/chit3.png";
+
+let chit4 = new Image();
+chit4.src = "./images/chit4.png";
+
+// Array with images
+let imgArray = [chit2, chit3, chit4];
+let chitIndex = 0;
+//Chitautirs position
+chit1ImageX = 200;
+chit1ImageY = 670;
+
+//Animating chitauri
+function chitauriMoving() {
+  let myCurrentChitImage = imgArray[chitIndex];
+  ctx.drawImage(myCurrentChitImage, chit1ImageX, chit1ImageY);
+  chit1ImageX -= 20;
+  if (intervalId % 10 == 0) {
+    chitIndex++;
+  }
+  if (chitIndex >= imgArray.length) {
+    chitIndex = 0;
+  }
+
+  for (let i = 0; i < arrayOfChitauris.length; i++) {
+    ctx.drawImage(
+      myCurrentChitImage,
+      arrayOfChitauris[i].x,
+      arrayOfChitauris[i].y
+    );
+    arrayOfChitauris[i].x = arrayOfChitauris[i].x - 6;
+
+    if (arrayOfChitauris[i].x + myCurrentChitImage.width < 0) {
+      arrayOfChitauris[i] = {
+        x: 11800,
+        y: Math.floor(
+          Math.random() * (canvas.height - myCurrentChitImage.height)
+        ),
+      };
+    }
+    for (let j = 0; j < arrayOfBalls.length; j++) {
+      if (collisionWithBall(arrayOfBalls[j], arrayOfChitauris[i])) {
+        arrayOfChitauris.splice(i, 1);
+        arrayOfBalls.splice(j, 1);
+        pointsCounter += 10;
+        console.log(pointsCounter);
+        //i--;
+        //j--;
+      }
+
+      // collisionWithThanos(arrayOfBalls[j]);
+    }
   }
 }
 
@@ -234,9 +323,10 @@ function draw() {
     ctx.drawImage(wandaImage, scarletX, scarletY);
   } else if (chooseCharacter === "cpMarvel") {
     ctx.drawImage(marvelImage, scarletX, scarletY);
+  } else {
+    ctx.drawImage(wandaImage, scarletX, scarletY);
   }
 
-  //ctx.drawImage(wandaImage, scarletX, scarletY);
   ctx.drawImage(proximaImage, proximaX, 200);
   proximaX = proximaX - 4;
   ctx.drawImage(corvusImage, corvusX, 350);
@@ -248,6 +338,8 @@ function draw() {
   valkiriaX = valkiriaX + 4;
   ctx.drawImage(rescuePottsImage, rescueX, 150);
   rescueX = rescueX + 4;
+  ctx.drawImage(mantisImage, mantisX, 250);
+  mantisX = mantisX + 4;
   ctx.drawImage(marvelImage, marvelX, 250);
   marvelX = marvelX + 8;
   ctx.drawImage(okoyeImage, okoyeX, 350);
@@ -261,10 +353,14 @@ function draw() {
   ctx.drawImage(stanLeeImage, stanLeeImageX, 670);
   stanLeeImageX += 4;
   ctx.drawImage(gaunletImage, gaunletImageX, gaunletImageY);
+  ctx.drawImage(leviImage, leviX, 250);
+  leviX = leviX - 4;
+  ctx.drawImage(spidermanImage, spidermanImageX, spidermanImageY);
   //Calling the function to draw the score on the canvas
   drawScore();
   //calling groot to show up in the canvas
   grootDancing();
+  chitauriMoving();
 
   //Looping over the Space Dogs
   for (let i = 0; i < arrayOfSpaceDogs.length; i++) {
@@ -291,6 +387,10 @@ function draw() {
       // collisionWithThanos(arrayOfBalls[j]);
     }
     collisionWithWanda(arrayOfSpaceDogs[i]);
+    if (arrayOfChitauris[i] !== undefined) {
+      collisionWithWanda(arrayOfChitauris[i]);
+    }
+
     collisionWithGaunlet(arrayOfSpaceDogs[i]);
 
     if (collisionWithWomen(arrayOfSpaceDogs[i])) {
@@ -310,7 +410,6 @@ function draw() {
         ctx.drawImage(blastImage, arrayOfBalls[i].x, arrayOfBalls[i].y);
       }
       arrayOfBalls[i].x += incrBall;
-      audioBalls.volume = 0.1;
     }
   }
 
@@ -363,7 +462,6 @@ function startTheGame() {
   backToStart.style.display = "none";
   audio.play();
   audio2.play();
-  audio2.volume = 0.1;
   draw();
 }
 
@@ -385,21 +483,33 @@ function resetVariables() {
     { x: 1900, y: 250 },
     { x: 1600, y: 50 },
   ];
-  proximaX = 2200;
-  corvusX = 1400;
-  nebulaX = 1800;
+  arrayOfChitauris = [
+    { x: 11800, y: 100 },
+    { x: 11700, y: 300 },
+    { x: 21000, y: 60 },
+    { x: 11300, y: 150 },
+    { x: 12100, y: 400 },
+    { x: 11100, y: 500 },
+    { x: 23100, y: 250 },
+    { x: 19100, y: 200 },
+    { x: 16100, y: 100 },
+  ];
+  proximaX = 8200;
+  corvusX = 8400;
+  nebulaX = 8800;
   thanosX = 1250;
   thanosY = 0;
   valkiriaX = -6200;
   valkiriaY = 50;
   rescueX = -6200;
+  mantisX = 6200;
   marvelX = -11600;
   okoyeX = -6200;
   waspX = -6200;
   shuriX = -6200;
   gamoraX = -6200;
   finalScore();
-  //audio.pause();
+  audio.load();
   audio2.load();
 }
 
@@ -425,7 +535,7 @@ function collisionWithWanda(spaceDogs) {
   let crashBottom =
     spaceDogsBottom <= scarletBottom && spaceDogsBottom >= scarletTop;
 
-  // actual collision check
+  // Checking if the collision happens
 
   if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
     isGameOver = true;
@@ -544,12 +654,12 @@ function collisionWithBall(currentBall, currentSpaceDog) {
 
 //AUDIO SETTINGS
 let audio = new Audio(
-  "Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
+  "./assets/Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
-audio.volume = 0.1;
+audio.volume = 0.01;
 
-let audio2 = new Audio("avengers_assemble_.mp3");
-audio2.volume = 0.1;
+let audio2 = new Audio("./assets/avengers_assemble_.mp3");
+audio2.volume = 0.03;
 
 audio.addEventListener(
   "loadedmetadata",
@@ -559,8 +669,8 @@ audio.addEventListener(
   false
 );
 
-//Sound effect for the balls of energy
-let audioBalls = new Audio("ballsSound.mp3");
+//Sound effect for choosing character
+let audioBalls = new Audio("./assets/ballsSound.mp3");
 
 //Timer for first Audio in splashScreen to start when I want
 audioFirstScreen.addEventListener(
@@ -582,17 +692,15 @@ window.addEventListener("load", () => {
     chooseCharacter = "wanda";
     wandaPlayer.className = "wanda";
     audioBalls.play();
-    audioBalls.volume = 0.1;
+    audioBalls.volume = 0.02;
   });
   cpMarvelPlayer.addEventListener("click", () => {
     chooseCharacter = "cpMarvel";
     audioBalls.play();
-    audioBalls.volume = 0.1;
+    audioBalls.volume = 0.02;
   });
   startBtn.addEventListener("click", () => {
     startTheGame();
-
-    audio2.play();
   });
   gameOvBtn.addEventListener("click", () => {
     resetVariables();
@@ -604,8 +712,8 @@ window.addEventListener("load", () => {
     backToStart.style.display = "none";
     backGround.style.display = "block";
     hideHeader.style.display = "block";
-    marvelStudios.style.display = "block";
     instru.style.display = "block";
+    marvelStudios.style.display = "block";
     gameOvBtn.style.display = "none";
     startBtn.style.display = "block";
     audioFirstScreen.style.display = "block";

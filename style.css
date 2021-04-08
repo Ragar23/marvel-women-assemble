@@ -79,7 +79,6 @@ p {
 
 #end-game-button {
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -92,9 +91,8 @@ p {
   font-family: "Marvel";
   box-shadow: 20px 5px 5px black;
   transition: transform 0.4s;
-  letter-spacing: 1rem;
+  letter-spacing: 0.8rem;
   text-shadow: 10px 0px 0px #000000;
-  transition: transform 0.4s;
 }
 
 h2 {
@@ -121,11 +119,14 @@ h2 {
   cursor: pointer;
   font-family: "Marvel";
   box-shadow: 20px 5px 5px black;
-  transition: transform 0.4s;
   letter-spacing: 1rem;
   text-shadow: 10px 0px 0px #000000;
   transition: transform 0.4s;
-  margin-top: 140px;
+  margin-top: 120px;
+}
+
+#backTo-button:hover {
+  transform: scale(1.15);
 }
 
 #howToPlay {
