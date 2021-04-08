@@ -1,8 +1,7 @@
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
-//BETTER WRITING MY CODES
-//- Write more descriptive names.
+//Some Global variables
 let intervalId = 0;
 let isGameOver = false;
 let isArrowUp = false;
@@ -12,8 +11,7 @@ let isArrowLeft = false;
 let pressS = false;
 let pointsCounter = 0;
 
-// Loading the Images
-
+//----Loading the Images------//
 let bg = new Image();
 bg.src = "./images/bg.png";
 
@@ -83,7 +81,16 @@ leviImage.src = "./images/levi.png";
 let spidermanImage = new Image();
 spidermanImage.src = "./images/spiderman.png";
 
-//The DOM Elements to Start the Game
+let chit2 = new Image();
+chit2.src = "./images/chit2.png";
+
+let chit3 = new Image();
+chit3.src = "./images/chit3.png";
+
+let chit4 = new Image();
+chit4.src = "./images/chit4.png";
+
+//-----The DOM Elements------//
 let startBtn = document.querySelector("#start-button");
 let backGround = document.querySelector("#FirsPart");
 let gameOvBtn = document.querySelector("#end-button");
@@ -107,32 +114,27 @@ let scarletX = 0,
 let incrY = 5;
 let incrX = 5;
 
-//Choosing character
+//Variables for choosing character
 let wandaCharacter = wandaImage;
 let cpMarvelCharacter = marvelImage;
 let chooseCharacter = "";
 
-//SpaceDogs Measures
-let spaceDogsX = 1200;
-
-//Ball measures
-let shootBallX = scarletX;
-let shootBallY = scarletY;
-
-let arrayOfBalls = [];
-let incrBall = 8;
-
+//---POSITION OF SOME CHARACTERS---//
 //proxima position
-let proximaX = 8800;
+let proximaX = 10800;
+let proximaY = 200;
 //coruvs position
-let corvusX = 8000;
+let corvusX = 10000;
+let corvusY = 350;
 //nebula position
-let nebulaX = 8400;
+let nebulaX = 10400;
+let nebulaY = 600;
 //thanos position
 let thanosX = 1250;
 let thanosY = 0;
 //levi position
-let leviX = 8350;
+let leviX = 10350;
+let leviY = 150;
 //valkiria position
 let valkiriaX = -6200;
 let valkiriaY = 50;
@@ -162,6 +164,16 @@ let spidermanImageY = 480;
 //mantis position
 let mantisX = -6200;
 
+//SpaceDogs position
+let spaceDogsX = 1200;
+
+//Ball position
+let shootBallX = scarletX;
+let shootBallY = scarletY;
+
+let arrayOfBalls = [];
+let incrBall = 8;
+
 function drawScore() {
   ctx.font = "40px Marvel";
   ctx.fillStyle = "#fd0202";
@@ -169,7 +181,6 @@ function drawScore() {
 }
 
 function finalScore() {
-  console.log("final score");
   if (
     finalScoreDisplay.innerText ==
     "You've reached a score of 0 points by killing the space dogs!"
@@ -181,7 +192,7 @@ function finalScore() {
   }
 }
 
-//setting Wanda's controllers
+//setting Wanda's controllers up and down
 document.addEventListener("keydown", (event) => {
   if (event.code == "ArrowUp") {
     isArrowUp = true;
@@ -190,16 +201,27 @@ document.addEventListener("keydown", (event) => {
     isArrowUp = false;
     isArrowDown = true;
   }
-  //making shoot
+  //---making shoot possible--//
 
   if (event.code == "KeyS") {
     arrayOfBalls.push({ x: scarletX + 50, y: scarletY + 20 });
     pressS = true;
 
     arrayOfSpaceDogs.push({ x: 1300 });
-    arrayOfChitauris.push({ x: 1300, x: 1300, x: 1300 });
+    arrayOfChitauris.push({ x: 1800, x: 1800, x: 1800 });
   }
 
+  if (event.code == "KeyW") {
+    valkiriaX = 0;
+    mantisX = 0;
+    okoyeX = 0;
+    rescueX = 0;
+    gamoraX = 0;
+    shuriX = 0;
+    waspX = 0;
+    marvelX = 0;
+  }
+  //-----Left and right controllers----//
   if (event.code == "ArrowLeft") {
     isArrowLeft = true;
     isArrowRight = false;
@@ -216,7 +238,7 @@ document.addEventListener("keyup", () => {
   isArrowLeft = false;
 });
 
-//The Space Dogs
+//----The Space Dogs----//
 let arrayOfSpaceDogs = [
   { x: 1800, y: 300 },
   { x: 1700, y: 100 },
@@ -229,7 +251,7 @@ let arrayOfSpaceDogs = [
   { x: 1600, y: 50 },
 ];
 
-//The chitarui
+//----The chitarui----//
 
 let arrayOfChitauris = [
   { x: 11800, y: 100 },
@@ -253,17 +275,6 @@ function grootDancing() {
     grootStanding = !grootStanding;
   }
 }
-
-// image files
-
-let chit2 = new Image();
-chit2.src = "./images/chit2.png";
-
-let chit3 = new Image();
-chit3.src = "./images/chit3.png";
-
-let chit4 = new Image();
-chit4.src = "./images/chit4.png";
 
 // Array with images
 let imgArray = [chit2, chit3, chit4];
@@ -305,17 +316,12 @@ function chitauriMoving() {
         arrayOfChitauris.splice(i, 1);
         arrayOfBalls.splice(j, 1);
         pointsCounter += 10;
-        console.log(pointsCounter);
-        //i--;
-        //j--;
       }
-
-      // collisionWithThanos(arrayOfBalls[j]);
     }
   }
 }
 
-//My Functions for the Game
+//----Functions for the Game----//
 function draw() {
   ctx.drawImage(bg, 0, 0);
   //I need to check which character the user has chosen
@@ -327,11 +333,11 @@ function draw() {
     ctx.drawImage(wandaImage, scarletX, scarletY);
   }
 
-  ctx.drawImage(proximaImage, proximaX, 200);
+  ctx.drawImage(proximaImage, proximaX, proximaY);
   proximaX = proximaX - 4;
-  ctx.drawImage(corvusImage, corvusX, 350);
+  ctx.drawImage(corvusImage, corvusX, corvusY);
   corvusX = corvusX - 4;
-  ctx.drawImage(nebulaImage, nebulaX, 600);
+  ctx.drawImage(nebulaImage, nebulaX, nebulaY);
   nebulaX = nebulaX - 4;
   ctx.drawImage(thanosImage, thanosX, 300);
   ctx.drawImage(valkiriaImage, valkiriaX, valkiriaY);
@@ -379,19 +385,18 @@ function draw() {
         arrayOfSpaceDogs.splice(i, 1);
         arrayOfBalls.splice(j, 1);
         pointsCounter += 10;
-        console.log(pointsCounter);
-        //i--;
-        //j--;
       }
-
-      // collisionWithThanos(arrayOfBalls[j]);
     }
     collisionWithWanda(arrayOfSpaceDogs[i]);
-    if (arrayOfChitauris[i] !== undefined) {
-      collisionWithWanda(arrayOfChitauris[i]);
-    }
+    collisionWithWanda(arrayOfChitauris[i]);
+
+    collision(wandaImage, scarletX, scarletY, nebulaImage, nebulaX, nebulaY);
+    collision(wandaImage, scarletX, scarletY, corvusImage, corvusX, corvusY);
+    collision(wandaImage, scarletX, scarletY, leviImage, leviX, leviY);
+    collision(wandaImage, scarletX, scarletY, proximaImage, proximaX, proximaY);
 
     collisionWithGaunlet(arrayOfSpaceDogs[i]);
+    collisionWithGaunlet(arrayOfChitauris[i]);
 
     if (collisionWithWomen(arrayOfSpaceDogs[i])) {
       arrayOfSpaceDogs = [];
@@ -447,7 +452,7 @@ function draw() {
   }
 }
 
-//Start the Game
+//----Start the Game----//
 function startTheGame() {
   canvas.style.display = "block";
   startBtn.style.display = "none";
@@ -484,12 +489,12 @@ function resetVariables() {
     { x: 1600, y: 50 },
   ];
   arrayOfChitauris = [
-    { x: 11800, y: 100 },
-    { x: 11700, y: 300 },
+    { x: 15800, y: 100 },
+    { x: 14700, y: 300 },
     { x: 21000, y: 60 },
-    { x: 11300, y: 150 },
-    { x: 12100, y: 400 },
-    { x: 11100, y: 500 },
+    { x: 13300, y: 150 },
+    { x: 14100, y: 400 },
+    { x: 16100, y: 500 },
     { x: 23100, y: 250 },
     { x: 19100, y: 200 },
     { x: 16100, y: 100 },
@@ -499,6 +504,7 @@ function resetVariables() {
   nebulaX = 8800;
   thanosX = 1250;
   thanosY = 0;
+  leviX = 8400;
   valkiriaX = -6200;
   valkiriaY = 50;
   rescueX = -6200;
@@ -512,6 +518,44 @@ function resetVariables() {
   audio.load();
   audio2.load();
 }
+
+//---Generic collision function---//
+
+function collision(
+  object1Image,
+  object1X,
+  object1Y,
+  object2Image,
+  object2X,
+  object2Y
+) {
+  let object1Left = object1X;
+  let object1Right = object1X + object1Image.width;
+  let object1Top = object1Y;
+  let object1Bottom = object1Y + object1Image.height;
+
+  // variables to store the positions of the spaceDogs
+  let object2Left = object2X;
+  let object2Right = object2X + object2Image.width;
+  let object2Top = object2Y;
+  let object2Bottom = object2Y + object2Image.height;
+
+  // checks the crash cases
+  let crashRight = object2Left <= object1Right && object2Right >= object1Left;
+  let crashLeft = object2Right >= object1Left && object2Left <= object1Right;
+  let crashTop = object2Bottom >= object1Top && object2Top <= object1Bottom;
+  let crashBottom =
+    object2Bottom <= object1Bottom && object2Bottom >= object1Top;
+
+  // Checking if the collision happens
+
+  if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
+    isGameOver = true;
+  }
+  return false;
+}
+
+//-----COLLISION FUNCTIONS----//
 
 //When SpaceDogs crash with Wanda = Game Over
 function collisionWithWanda(spaceDogs) {
@@ -604,10 +648,7 @@ function collisionWithWomen(spaceDogs) {
 }
 
 function collisionWithBall(currentBall, currentSpaceDog) {
-  //console.log(currentBall);
   //I give two parameters because the space dogs are not defined inside the function
-  //Check collision between left side of the current space dogs and right side of the current ball
-  //Im writing the same thing twice.
   let spaceDogsLeft = currentSpaceDog.x;
   let spaceDogsRight = currentSpaceDog.x + spaceDogsImage.width;
   let spaceDogsTop = currentSpaceDog.y;
@@ -629,30 +670,7 @@ function collisionWithBall(currentBall, currentSpaceDog) {
   }
 }
 
-/*function collisionWithThanos(currentBallToThanos) {
-  console.log(currentBallToThanos);
-  let ballsRight = currentBallToThanos.x + ballImage.width;
-  let ballsLeft = currentBallToThanos.x;
-  let ballsTop = currentBallToThanos.y;
-  let ballsBottom = currentBallToThanos.y + ballImage.width;
-
-  let thanosLeft = thanosX;
-  let thanosRight = thanosX + thanosImage.width;
-  let thanosTop = thanosY;
-  let thanosBottom = thanosX + thanosImage.height;
-
-  let crashRight = thanosLeft <= ballsRight && thanosRight >= ballsLeft;
-  let crashLeft = thanosRight >= ballsLeft && thanosLeft <= ballsRight;
-  let crashTop = thanosBottom >= ballsTop && thanosTop <= ballsBottom;
-  let crashBottom = thanosBottom <= ballsBottom && thanosBottom >= ballsTop;
-
-  if ((crashLeft || crashRight) && (crashTop || crashBottom)) {
-    console.log("collision happening");
-    return true;
-  }
-}*/
-
-//AUDIO SETTINGS
+//---AUDIO SETTINGS---//
 let audio = new Audio(
   "./assets/Alan Silvestri - Portals (From Avengers EndgameAudio Only).mp3"
 );
@@ -660,6 +678,9 @@ audio.volume = 0.01;
 
 let audio2 = new Audio("./assets/avengers_assemble_.mp3");
 audio2.volume = 0.03;
+
+//Sound effect for choosing character
+let audioBalls = new Audio("./assets/ballsSound.mp3");
 
 audio.addEventListener(
   "loadedmetadata",
@@ -669,10 +690,7 @@ audio.addEventListener(
   false
 );
 
-//Sound effect for choosing character
-let audioBalls = new Audio("./assets/ballsSound.mp3");
-
-//Timer for first Audio in splashScreen to start when I want
+//Timer for first Audio in splashScreen
 audioFirstScreen.addEventListener(
   "loadedmetadata",
   function () {
