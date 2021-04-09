@@ -514,6 +514,7 @@ function resetVariables() {
   waspX = -6200;
   shuriX = -6200;
   gamoraX = -6200;
+  stanLeeImageX = -3000;
   finalScore();
   audio.load();
   audio2.load();

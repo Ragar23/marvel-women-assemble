@@ -19,13 +19,11 @@ the screen. The game will end if the Ultrons touch the character.
 
 ## Data structure
 
-1. main.js
+1. index.js
 
 - theSplashScreen(){} --> build the screen where you select the characters and start the game
 - theGameScreen(){}
 - theGameOverScreen (){}
-
-2. game.js
 
 - marvelWomenGame (){}
 - ultronCollision (){}
@@ -35,13 +33,9 @@ the screen. The game will end if the Ultrons touch the character.
 - clearCanvas (){}
 - theUltronsLoop(){}
 
-3. ultrons.js
-
 - ultrons () {}
 - drawUltrons (){}
 - moveUltrons (){}
-
-4. characters.js
 
 - CharacterI (){}
 - drawCharI (){}
@@ -57,6 +51,10 @@ the screen. The game will end if the Ultrons touch the character.
 - Build the instructions into the start screen
 
 ## Additional Links
+
+### Link Deploy
+
+[Link url](https://ragar23.github.io/marvel-women-assemble/)
 
 ## Notion
 
