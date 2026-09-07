@@ -103,3 +103,14 @@ autonómica de presupuestos. Los aranceles de notaría y registro son
 estimaciones por tramos. Cada comunidad enlaza a su fuente oficial en el pie de
 página. **Confirma siempre los importes con la Agencia Tributaria de tu
 comunidad antes de firmar.** No es asesoramiento fiscal, legal ni financiero.
+
+## Versión de un solo archivo
+
+```bash
+node build-artifact.mjs        # -> dist/mi-hipoteca.html
+```
+
+Empaqueta el CSS y los cinco módulos ES en un único HTML autocontenido (125 KB)
+para publicarlo como Artifact o subirlo a cualquier hosting estático. Añade la
+variante de tema `[data-theme]` y retira el exportador a CSV, porque el visor
+de Artifacts bloquea las descargas que inicia la propia página.

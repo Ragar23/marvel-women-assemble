@@ -713,14 +713,16 @@ function conectarEventos() {
     actualizarProgreso();
   });
 
-  $('#btnResetGuia').addEventListener('click', () => {
+  $('#btnResetGuia')?.addEventListener('click', () => {
     marcados = new Set();
     almacen.escribir(CLAVE_GUIA, []);
     renderGuia();
   });
 
   // Exportar el cuadro de amortización
-  $('#btnCsv').addEventListener('click', () => {
+  /* csv:inicio — build-artifact.mjs elimina este bloque: el visor de
+     Artifacts bloquea las descargas que inicia la propia página. */
+  $('#btnCsv')?.addEventListener('click', () => {
     const tabla = window.__ultimaTabla;
     if (!tabla) return;
     const cabecera = 'Mes;Cuota;Intereses;Capital;Amortizacion extra;Pendiente\n';
@@ -738,8 +740,9 @@ function conectarEventos() {
     a.click();
     URL.revokeObjectURL(a.href);
   });
+  /* csv:fin */
 
-  $('#btnPrint').addEventListener('click', () => window.print());
+  $('#btnPrint')?.addEventListener('click', () => window.print());
 
   // Estado en la URL para poder compartir un escenario
   window.addEventListener('beforeunload', () => almacen.escribir(CLAVE_ESTADO, state));
