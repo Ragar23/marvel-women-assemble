@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#2f4bd8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1119" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="Calculadora de hipoteca y guía de compra de vivienda en España, con los impuestos y gastos reales de cada comunidad autónoma."
+    />
+    <title>Calculadora de Hipoteca · España</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>"
+    />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="logo">
+          <span class="logo__mark" aria-hidden="true">🏠</span>
+          <span>Mi Hipoteca<small>Calculadora + guía de compra · España</small></span>
+        </div>
+        <span class="ca-pill" id="caPill">Comunidad de Madrid</span>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Secciones">
+      <div class="tabs__scroll" role="tablist">
+        <button class="tab" role="tab" id="tab-calc" aria-controls="panel-calc" aria-selected="true">
+          Calculadora
+        </button>
+        <button class="tab" role="tab" id="tab-capacidad" aria-controls="panel-capacidad" aria-selected="false">
+          ¿Cuánto puedo pagar?
+        </button>
+        <button class="tab" role="tab" id="tab-comparar" aria-controls="panel-comparar" aria-selected="false">
+          Comparar comunidades
+        </button>
+        <button class="tab" role="tab" id="tab-guia" aria-controls="panel-guia" aria-selected="false">
+          Cómo comprar una casa
+        </button>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <!-- ============================ CALCULADORA ============================ -->
+      <section class="panel is-active" id="panel-calc" role="tabpanel" aria-labelledby="tab-calc">
+        <div class="card">
+          <h2 class="card__title">La vivienda</h2>
+          <div class="grid grid--2">
+            <div class="field">
+              <label for="f-precio">Precio de compra</label>
+              <div class="control">
+                <input id="f-precio" type="number" inputmode="numeric" min="0" step="1000" data-bind="precio" />
+                <span class="control__unit">€</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-ca">Comunidad autónoma</label>
+              <div class="control control--select">
+                <select id="f-ca" data-bind="ca"></select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label id="lbl-tipo">Tipo de vivienda</label>
+              <div class="seg" role="group" aria-labelledby="lbl-tipo" data-seg="tipoVivienda">
+                <button type="button" data-value="usada" aria-pressed="true">Segunda mano</button>
+                <button type="button" data-value="nueva" aria-pressed="false">Obra nueva</button>
+              </div>
+              <span class="field__hint" id="hint-tipo"></span>
+            </div>
+
+            <div class="field">
+              <label for="f-valorref">Valor de referencia de Catastro <span class="muted">(opcional)</span></label>
+              <div class="control">
+                <input id="f-valorref" type="number" inputmode="numeric" min="0" step="1000" data-bind="valorReferencia" placeholder="0" />
+                <span class="control__unit">€</span>
+              </div>
+              <span class="field__hint">
+                El ITP se calcula sobre el mayor entre el precio y este valor. Consúltalo en la Sede del Catastro.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <details class="card" id="card-perfil">
+          <summary>Tu perfil fiscal <span class="badge badge--brand" id="perfilBadge">tipo general</span></summary>
+          <div class="grid grid--2">
+            <div class="field">
+              <label for="f-edad">Edad del comprador más joven</label>
+              <div class="control">
+                <input id="f-edad" type="number" inputmode="numeric" min="18" max="99" data-bind="perfil.edad" />
+                <span class="control__unit">años</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-irpf">Base imponible anual del IRPF</label>
+              <div class="control">
+                <input id="f-irpf" type="number" inputmode="numeric" min="0" step="1000" data-bind="perfil.baseIrpf" />
+                <span class="control__unit">€</span>
+              </div>
+              <span class="field__hint">Varias comunidades limitan los tipos reducidos por renta.</span>
+            </div>
+          </div>
+
+          <div class="chips" style="margin-top: 12px">
+            <label class="chip"><input type="checkbox" data-bind="perfil.viviendaHabitual" /> Será mi vivienda habitual</label>
+            <label class="chip"><input type="checkbox" data-bind="perfil.primeraVivienda" /> Es mi primera vivienda</label>
+            <label class="chip"><input type="checkbox" data-bind="perfil.familiaNumerosa" /> Familia numerosa</label>
+            <label class="chip"><input type="checkbox" data-bind="perfil.monoparental" /> Familia monoparental</label>
+            <label class="chip"><input type="checkbox" data-bind="perfil.vpo" /> Vivienda protegida (VPO)</label>
+            <label class="chip"><input type="checkbox" data-bind="perfil.municipioPequeno" /> Municipio rural o en riesgo de despoblación</label>
+          </div>
+
+          <div class="field" style="margin-top: 12px; max-width: 320px">
+            <label for="f-discap">Grado de discapacidad reconocido</label>
+            <div class="control control--select">
+              <select id="f-discap" data-bind="perfil.discapacidad" data-type="number">
+                <option value="0">Ninguno</option>
+                <option value="33">33 % o superior</option>
+                <option value="65">65 % o superior</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="note" id="notaCa"></div>
+        </details>
+
+        <div class="card">
+          <h2 class="card__title">La hipoteca</h2>
+
+          <div class="field">
+            <label for="f-entrada">
+              Entrada / ahorro aportado: <strong id="entradaOut">20 % · 50.000 €</strong>
+            </label>
+            <input id="f-entrada" type="range" min="0" max="60" step="1" data-bind="entradaPct" data-type="number" />
+            <span class="field__hint" id="ltvHint"></span>
+          </div>
+
+          <div class="grid grid--2" style="margin-top: 4px">
+            <div class="field">
+              <label for="f-plazo">Plazo: <strong id="plazoOut">30 años</strong></label>
+              <input id="f-plazo" type="range" min="5" max="40" step="1" data-bind="plazoAnios" data-type="number" />
+            </div>
+
+            <div class="field">
+              <label id="lbl-modalidad">Tipo de interés</label>
+              <div class="seg" role="group" aria-labelledby="lbl-modalidad" data-seg="modalidad">
+                <button type="button" data-value="fijo" aria-pressed="true">Fijo</button>
+                <button type="button" data-value="variable" aria-pressed="false">Variable</button>
+                <button type="button" data-value="mixto" aria-pressed="false">Mixto</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid--3" style="margin-top: 12px">
+            <div class="field">
+              <label for="f-tin" id="lbl-tin">TIN fijo</label>
+              <div class="control">
+                <input id="f-tin" type="number" inputmode="decimal" min="0" max="20" step="0.05" data-bind="tinFijo" />
+                <span class="control__unit">%</span>
+              </div>
+            </div>
+            <div class="field js-variable">
+              <label for="f-dif">Diferencial sobre euríbor</label>
+              <div class="control">
+                <input id="f-dif" type="number" inputmode="decimal" min="0" max="5" step="0.05" data-bind="diferencial" />
+                <span class="control__unit">%</span>
+              </div>
+            </div>
+            <div class="field js-variable">
+              <label for="f-eur">Euríbor previsto</label>
+              <div class="control">
+                <input id="f-eur" type="number" inputmode="decimal" min="-1" max="10" step="0.05" data-bind="euribor" />
+                <span class="control__unit">%</span>
+              </div>
+            </div>
+            <div class="field js-mixto">
+              <label for="f-aniosfijo">Años a tipo fijo</label>
+              <div class="control">
+                <input id="f-aniosfijo" type="number" inputmode="numeric" min="1" max="30" step="1" data-bind="aniosFijo" />
+                <span class="control__unit">años</span>
+              </div>
+            </div>
+          </div>
+
+          <details style="margin-top: 14px">
+            <summary style="cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); min-height: 32px">
+              Comisiones y vinculaciones
+            </summary>
+            <div class="grid grid--3" style="margin-top: 12px">
+              <div class="field">
+                <label for="f-apertura">Comisión de apertura</label>
+                <div class="control">
+                  <input id="f-apertura" type="number" inputmode="decimal" min="0" max="3" step="0.05" data-bind="comisionApertura" />
+                  <span class="control__unit">%</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-comamort">Comisión por amortizar</label>
+                <div class="control">
+                  <input id="f-comamort" type="number" inputmode="decimal" min="0" max="3" step="0.05" data-bind="comisionAmort" />
+                  <span class="control__unit">%</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-seguros">Seguros vinculados</label>
+                <div class="control">
+                  <input id="f-seguros" type="number" inputmode="numeric" min="0" step="25" data-bind="seguros" />
+                  <span class="control__unit">€/año</span>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <div class="kpis" id="kpis"></div>
+
+        <div class="grid grid--2" style="margin-top: 14px; align-items: start">
+          <div class="card" id="cardDinero">
+            <h2 class="card__title">Dinero necesario al inicio</h2>
+            <div class="rows" id="desgloseGastos"></div>
+            <div id="avisoGastos"></div>
+          </div>
+
+          <div class="card">
+            <h2 class="card__title">Coste total del préstamo</h2>
+            <div class="rows" id="desgloseCoste"></div>
+            <div id="chartDonut"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Evolución del préstamo</h2>
+          <div id="chartAmort"></div>
+          <div class="legend">
+            <span><i style="background: var(--brand)"></i> Capital amortizado</span>
+            <span><i style="background: var(--warn)"></i> Intereses pagados</span>
+            <span><i style="background: var(--ink-faint)"></i> Deuda pendiente</span>
+          </div>
+        </div>
+
+        <div class="card hidden" id="cardEscenarios">
+          <h2 class="card__title">Si el euríbor se mueve…</h2>
+          <div class="table-scroll">
+            <table id="tablaEscenarios">
+              <thead>
+                <tr>
+                  <th>Escenario</th>
+                  <th class="num">Euríbor</th>
+                  <th class="num">Cuota inicial</th>
+                  <th class="num">Cuota máxima</th>
+                  <th class="num">Intereses totales</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="note">
+            <span class="note__icon">💡</span>
+            <span>
+              El euríbor llegó al <b>5,39 %</b> en julio de 2008. Comprueba si podrías pagar la cuota del escenario
+              de crisis antes de decidirte por un tipo variable.
+            </span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Amortización anticipada</h2>
+          <div class="grid grid--2">
+            <div class="field">
+              <label for="f-amortimp">Importe que aportas</label>
+              <div class="control">
+                <input id="f-amortimp" type="number" inputmode="numeric" min="0" step="1000" data-bind="amortImporte" />
+                <span class="control__unit">€</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-amortanio">En el año</label>
+              <div class="control">
+                <input id="f-amortanio" type="number" inputmode="numeric" min="1" max="40" step="1" data-bind="amortAnio" />
+                <span class="control__unit">de hipoteca</span>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid--2" style="margin-top: 14px" id="amortResultado"></div>
+        </div>
+
+        <details class="card">
+          <summary>Cuadro de amortización</summary>
+          <div class="seg" style="max-width: 260px; margin-bottom: 12px" data-seg="vistaCuadro">
+            <button type="button" data-value="anual" aria-pressed="true">Por años</button>
+            <button type="button" data-value="mensual" aria-pressed="false">Mes a mes</button>
+          </div>
+          <div class="table-scroll" style="max-height: 460px; overflow-y: auto">
+            <table id="tablaCuadro">
+              <thead>
+                <tr>
+                  <th id="thPeriodo">Año</th>
+                  <th class="num">Cuota</th>
+                  <th class="num">Intereses</th>
+                  <th class="num">Capital</th>
+                  <th class="num">Pendiente</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="btn-row" style="margin-top: 12px">
+            <button class="btn" id="btnCsv" type="button">Descargar CSV</button>
+            <button class="btn" id="btnPrint" type="button">Imprimir / PDF</button>
+          </div>
+        </details>
+      </section>
+
+      <!-- ============================ CAPACIDAD ============================ -->
+      <section class="panel" id="panel-capacidad" role="tabpanel" aria-labelledby="tab-capacidad">
+        <div class="card">
+          <h2 class="card__title">Tu situación</h2>
+          <div class="grid grid--2">
+            <div class="field">
+              <label for="c-ingresos">Ingresos netos del hogar</label>
+              <div class="control">
+                <input id="c-ingresos" type="number" inputmode="numeric" min="0" step="100" data-bind="cap.ingresos" />
+                <span class="control__unit">€/mes</span>
+              </div>
+              <span class="field__hint">Suma de todos los titulares, después de impuestos.</span>
+            </div>
+            <div class="field">
+              <label for="c-deudas">Otras cuotas mensuales</label>
+              <div class="control">
+                <input id="c-deudas" type="number" inputmode="numeric" min="0" step="25" data-bind="cap.deudas" />
+                <span class="control__unit">€/mes</span>
+              </div>
+              <span class="field__hint">Coche, préstamos personales, tarjetas aplazadas.</span>
+            </div>
+            <div class="field">
+              <label for="c-ahorro">Ahorro disponible para la compra</label>
+              <div class="control">
+                <input id="c-ahorro" type="number" inputmode="numeric" min="0" step="1000" data-bind="cap.ahorro" />
+                <span class="control__unit">€</span>
+              </div>
+              <span class="field__hint">Sin contar tu colchón de emergencia.</span>
+            </div>
+            <div class="field">
+              <label for="c-plazo">Plazo: <strong id="capPlazoOut">30 años</strong></label>
+              <input id="c-plazo" type="range" min="5" max="40" step="1" data-bind="cap.plazo" data-type="number" />
+            </div>
+            <div class="field">
+              <label for="c-tin">TIN estimado</label>
+              <div class="control">
+                <input id="c-tin" type="number" inputmode="decimal" min="0" max="15" step="0.05" data-bind="cap.tin" />
+                <span class="control__unit">%</span>
+              </div>
+            </div>
+            <div class="field">
+              <label id="lbl-ltv">Financiación máxima del banco</label>
+              <div class="seg" role="group" aria-labelledby="lbl-ltv" data-seg="cap.ltv" data-type="number">
+                <button type="button" data-value="80" aria-pressed="true">80 % (estándar)</button>
+                <button type="button" data-value="90" aria-pressed="false">90 %</button>
+                <button type="button" data-value="100" aria-pressed="false">100 % (aval ICO)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpis" id="capKpis"></div>
+
+        <div class="card" style="margin-top: 14px">
+          <h2 class="card__title">Qué te limita</h2>
+          <div class="rows" id="capDetalle"></div>
+          <div id="capAviso"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Ratio de esfuerzo</h2>
+          <div id="capEsfuerzo"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Cuánto cambia según el plazo</h2>
+          <div class="table-scroll">
+            <table id="tablaPlazos">
+              <thead>
+                <tr>
+                  <th>Plazo</th>
+                  <th class="num">Cuota</th>
+                  <th class="num">Precio máximo</th>
+                  <th class="num">Intereses totales</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="note">
+            <span class="note__icon">⚠️</span>
+            <span>Alargar el plazo baja la cuota pero dispara los intereses. Compara la última columna.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ COMPARAR ============================ -->
+      <section class="panel" id="panel-comparar" role="tabpanel" aria-labelledby="tab-comparar">
+        <div class="card">
+          <h2 class="card__title">La misma compra en cada comunidad</h2>
+          <p class="muted" style="font-size: 14px; margin-bottom: 14px" id="comparaResumen"></p>
+          <div class="rank" id="rankCcaa"></div>
+          <div class="note">
+            <span class="note__icon">📍</span>
+            <span id="comparaDiff"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Detalle por comunidad</h2>
+          <div class="table-scroll">
+            <table id="tablaCcaa">
+              <thead>
+                <tr>
+                  <th>Comunidad</th>
+                  <th class="num">Tipo aplicado</th>
+                  <th class="num">Impuestos</th>
+                  <th class="num">Gastos</th>
+                  <th class="num">Total al inicio</th>
+                  <th class="num">% s/ precio</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== GUÍA ============================== -->
+      <section class="panel" id="panel-guia" role="tabpanel" aria-labelledby="tab-guia">
+        <div class="card">
+          <h2 class="card__title">
+            El proceso paso a paso
+            <span class="progress-pill" id="guiaProgreso">0 / 0</span>
+          </h2>
+          <p class="muted" style="font-size: 14px">
+            Comprar una vivienda en España lleva de 3 a 9 meses. Marca las casillas conforme avanzas: se guardan en
+            este navegador.
+          </p>
+          <div class="steps" id="guiaPasos"></div>
+          <div class="btn-row" style="margin-top: 18px">
+            <button class="btn btn--ghost" id="btnResetGuia" type="button">Reiniciar checklist</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Quién paga qué</h2>
+          <div class="grid grid--3" id="quienPaga"></div>
+          <div class="note note--ok">
+            <span class="note__icon">✅</span>
+            <span>
+              Desde la <b>Ley 5/2019</b>, el banco asume obligatoriamente el AJD del préstamo, la notaría y el
+              registro de la hipoteca y la gestoría. Si alguien te dice lo contrario, no es cierto.
+            </span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Preguntas frecuentes</h2>
+          <div id="faq"></div>
+        </div>
+      </section>
+
+      <footer class="disclaimer">
+        <p>
+          <b>Aviso.</b> Esta herramienta es una simulación con fines informativos. Los tipos de ITP, AJD e IVA
+          recogidos son los vigentes según la información pública consolidada a 2025 y cambian con cada ley
+          autonómica de presupuestos. Los aranceles de notaría y registro son estimaciones por tramos. Antes de
+          firmar nada, confirma los importes con la Agencia Tributaria de tu comunidad, tu notaría y tu entidad
+          financiera. No constituye asesoramiento fiscal, legal ni financiero.
+        </p>
+        <p id="fuenteCa"></p>
+      </footer>
+    </main>
+
+    <div class="sticky-cuota" id="stickyCuota" aria-hidden="true">
+      <div>
+        <div class="sticky-cuota__label">Cuota mensual</div>
+        <div class="sticky-cuota__value" id="stickyValor">—</div>
+      </div>
+      <div class="sticky-cuota__right">
+        <div class="sticky-cuota__label">Ahorro necesario</div>
+        <div class="sticky-cuota__value" id="stickyAhorro">—</div>
+      </div>
+    </div>
+
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>

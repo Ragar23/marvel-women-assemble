@@ -1,0 +1,11 @@
+{
+  "name": "calculadora-hipoteca",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Calculadora de hipoteca y guía de compra de vivienda en España, con la fiscalidad de cada comunidad autónoma.",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8080 --bind 127.0.0.1",
+    "test": "node --test tests/*.test.mjs"
+  }
+}
