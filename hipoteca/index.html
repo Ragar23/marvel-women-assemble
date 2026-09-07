@@ -24,7 +24,7 @@
           <span class="logo__mark" aria-hidden="true">🏠</span>
           <span>Mi Hipoteca<small>Calculadora + guía de compra · España</small></span>
         </div>
-        <span class="ca-pill" id="caPill">Comunidad de Madrid</span>
+        <button class="ca-pill" id="caPill" type="button" title="Cambiar de comunidad autónoma">Comunidad de Madrid</button>
       </div>
     </header>
 
@@ -48,6 +48,27 @@
     <main class="wrap">
       <!-- ============================ CALCULADORA ============================ -->
       <section class="panel is-active" id="panel-calc" role="tabpanel" aria-labelledby="tab-calc">
+        <div class="card card--picker">
+          <h2 class="card__title">Empieza por aquí · ¿dónde vas a comprar?</h2>
+          <div class="field">
+            <label for="f-ca">Elige tu comunidad autónoma</label>
+            <div class="control control--select control--lg">
+              <select id="f-ca" data-bind="ca"></select>
+            </div>
+            <span class="field__hint">
+              Están las 17 comunidades autónomas y también Ceuta y Melilla. Es la decisión que más
+              cambia el resultado: la misma vivienda puede costar más de 20.000 € extra solo por el
+              impuesto de la comunidad donde compres.
+            </span>
+          </div>
+          <div class="rows" id="resumenCa"></div>
+          <div class="btn-row" style="margin-top: 12px">
+            <button class="btn btn--ghost" id="btnVerComparativa" type="button">
+              Ver las 18 comparadas →
+            </button>
+          </div>
+        </div>
+
         <div class="card">
           <h2 class="card__title">La vivienda</h2>
           <div class="grid grid--2">
@@ -56,13 +77,6 @@
               <div class="control">
                 <input id="f-precio" type="number" inputmode="numeric" min="0" step="1000" data-bind="precio" />
                 <span class="control__unit">€</span>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-ca">Comunidad autónoma</label>
-              <div class="control control--select">
-                <select id="f-ca" data-bind="ca"></select>
               </div>
             </div>
 

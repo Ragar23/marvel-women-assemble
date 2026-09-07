@@ -150,6 +150,32 @@ function renderCalculadora() {
     <a href="${esc(comunidad.fuente)}" target="_blank" rel="noopener">${esc(comunidad.fuente)}</a>.`;
   $('#notaCa').innerHTML = `<span class="note__icon">📋</span><span><b>${esc(comunidad.nombre)}:</b> ${esc(comunidad.notas)}</span>`;
 
+  // Realimentación inmediata bajo el selector: qué tipo te toca y cuánto es.
+  const itpResumen = resumen.impuestos.itp;
+  const posicion = COMUNIDADES.map((c) => ({
+    id: c.id,
+    coste: resumenOperacion({
+      comunidad: c, precio: state.precio, valorReferencia: state.valorReferencia,
+      tipoVivienda: state.tipoVivienda, perfil: state.perfil, entradaPct: state.entradaPct,
+    }).gastosTotales,
+  }))
+    .sort((a, b) => a.coste - b.coste)
+    .findIndex((c) => c.id === comunidad.id) + 1;
+
+  $('#resumenCa').innerHTML = [
+    fila({
+      label: state.tipoVivienda === 'usada' ? 'Tipo de ITP que se te aplica' : 'Impuestos de obra nueva',
+      value: state.tipoVivienda === 'usada'
+        ? `<b>${pct(itpResumen.tipoEfectivo, 2)}</b>`
+        : `<b>${pct((resumen.impuestos.partidas[0].importe / (state.precio || 1)) * 100, 1)} + ${pct(resumen.impuestos.ajd.tipo, 2)}</b>`,
+    }),
+    fila({ label: 'Impuestos a pagar', value: `<b>${eur(resumen.impuestos.total)}</b>` }),
+    fila({
+      label: 'Ranking de coste fiscal (1 = la más barata)',
+      value: `<b>${posicion}.º</b> de ${COMUNIDADES.length}`,
+    }),
+  ].join('');
+
   const impuestoNueva = comunidad.impuestoNueva || { nombre: 'IVA', tipo: 10 };
   $('#hint-tipo').textContent =
     state.tipoVivienda === 'usada'
@@ -743,6 +769,19 @@ function conectarEventos() {
   /* csv:fin */
 
   $('#btnPrint')?.addEventListener('click', () => window.print());
+
+  // La píldora de la cabecera lleva al selector de comunidad y lo señala.
+  $('#caPill')?.addEventListener('click', () => {
+    $('#tab-calc').click();
+    const campo = $('#f-ca');
+    campo.closest('.control').scrollIntoView({ block: 'center', behavior: 'smooth' });
+    campo.closest('.control').classList.remove('destaca');
+    void campo.closest('.control').offsetWidth; // reinicia la animación
+    campo.closest('.control').classList.add('destaca');
+    campo.focus();
+  });
+
+  $('#btnVerComparativa')?.addEventListener('click', () => $('#tab-comparar').click());
 
   // Estado en la URL para poder compartir un escenario
   window.addEventListener('beforeunload', () => almacen.escribir(CLAVE_ESTADO, state));
