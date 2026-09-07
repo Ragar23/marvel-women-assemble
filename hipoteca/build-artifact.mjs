@@ -6,7 +6,7 @@
  *   node build-artifact.mjs   ->  dist/mi-hipoteca.html
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from 'node:fs';
 
 const leer = (f) => readFileSync(new URL(f, import.meta.url), 'utf8');
 
@@ -76,6 +76,16 @@ ${js}
 
 mkdirSync(new URL('./dist/', import.meta.url), { recursive: true });
 writeFileSync(new URL('./dist/mi-hipoteca.html', import.meta.url), salida);
+
+/* ---------- dist/site: la app multi-archivo lista para publicar ---------- */
+
+// Solo lo que se sirve: ni tests, ni scripts, ni README.
+const sitio = new URL('./dist/site/', import.meta.url);
+rmSync(sitio, { recursive: true, force: true });
+mkdirSync(sitio, { recursive: true });
+cpSync(new URL('./index.html', import.meta.url), new URL('./index.html', sitio));
+cpSync(new URL('./assets/', import.meta.url), new URL('./assets/', sitio), { recursive: true });
+console.log('dist/site/            index.html + assets/');
 
 const kb = (n) => `${Math.round(n / 1024)} KB`;
 console.log(`dist/mi-hipoteca.html  ${kb(salida.length)}`);

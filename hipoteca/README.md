@@ -114,3 +114,29 @@ Empaqueta el CSS y los cinco módulos ES en un único HTML autocontenido (125 KB
 para publicarlo como Artifact o subirlo a cualquier hosting estático. Añade la
 variante de tema `[data-theme]` y retira el exportador a CSV, porque el visor
 de Artifacts bloquea las descargas que inicia la propia página.
+
+## Desplegar en Netlify
+
+`netlify.toml` ya deja configurado el despliegue. Dos maneras:
+
+**Conectando el repositorio (recomendado: cada push republica)**
+
+En Netlify: *Add new site → Import an existing project → GitHub →*
+`marvel-women-assemble`, y ajusta:
+
+| Campo | Valor |
+|---|---|
+| Branch to deploy | `claude/mortgage-calculator-webapp-uu2nq7` (o `main` tras fusionar) |
+| Base directory | `hipoteca` |
+| Build command | `node build-artifact.mjs` |
+| Publish directory | `hipoteca/dist/site` |
+
+Los tres últimos los lee Netlify del propio `netlify.toml`.
+
+**Arrastrando la carpeta**
+
+```bash
+node build-artifact.mjs      # genera dist/site/
+```
+
+Y arrastra `dist/site` a <https://app.netlify.com/drop>.

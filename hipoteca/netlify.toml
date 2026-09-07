@@ -1,0 +1,22 @@
+# Sitio estático sin build: se publica la carpeta que genera build-artifact.mjs
+# con solo los archivos que se sirven (index.html + assets/).
+[build]
+  publish = "dist/site"
+  # dist/ no se versiona: Netlify la regenera en cada despliegue. El script
+  # solo usa node:fs, así que no hay dependencias que instalar.
+  command = "node build-artifact.mjs"
+
+# El HTML siempre fresco, para que un despliegue nuevo se vea al instante.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# CSS y JS llevan hash de contenido implícito por versión: se pueden cachear,
+# pero se revalidan a diario para no servir cálculos fiscales obsoletos.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
